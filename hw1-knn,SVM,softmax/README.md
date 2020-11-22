@@ -5,7 +5,7 @@
 
 # 运行结果
 **<font size=14>input数据分布图</font>**  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/data_distribution.png)  
+![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1-knn,SVM,softmax/data_distribution.png)  
 
 **<font size=14>knn</font>**  
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1-knn,SVM,softmax/knn.png)  
