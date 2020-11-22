@@ -8,8 +8,8 @@ input数据分布图
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/data_distribution.png)  
 
 knn  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/knn.png)
+![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/knn.png)  
 softmax  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/softmax.png)
+![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/softmax.png)  
 SVM  
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/SVM.png)
