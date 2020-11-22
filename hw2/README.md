@@ -5,4 +5,4 @@
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw2/IMG_4742.JPG)
 
 # 运行结果
-![image]()
+![image](https://github.com/Lin-CX/deep-learning/blob/main/hw2/hw2result.png)
