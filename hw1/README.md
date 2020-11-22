@@ -4,12 +4,12 @@
 因为本作业目的是熟悉使用softmax和entropy-cross计算loss。
 
 # 运行结果
-input数据分布图
+input数据分布图  
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/data_distribution.png)  
 
-knn
+knn  
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/knn.png)
-softmax
+softmax  
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/softmax.png)
-SVM
+SVM  
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/SVM.png)
