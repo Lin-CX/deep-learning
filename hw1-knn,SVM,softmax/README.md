@@ -8,9 +8,9 @@
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/data_distribution.png)  
 
 **<font size=14>knn</font>**  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/knn.png)  
+![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1-knn,SVM,softmax/knn.png)  
 
 **<font size=14>softmax</font>**  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/softmax.png)  
+![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1-knn,SVM,softmax/softmax.png)  
 **<font size=14>SVM</font>**  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1/SVM.png)
+![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1-knn,SVM,softmax/SVM.png)
