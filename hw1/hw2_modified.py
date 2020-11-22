@@ -145,7 +145,7 @@ x_test, y_test = dg.generate(number=n_test, seed=None, plot=False, num_class=num
 # set classifiers to 'svm' to test SVM classifier
 # set classifiers to 'softmax' to test softmax classifier
 # set classifiers to 'knn' to test kNN classifier
-classifiers = 'knn'
+classifiers = 'softmax'
 
 if classifiers == 'svm':
     print('training SVM classifier...')
