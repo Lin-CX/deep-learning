@@ -16,9 +16,9 @@
   
   
 ## mnist.py  
-* Nov 24, 2020  
+#### Nov 24, 2020  
 各个连接层可以连接，正常调整参数(input_size, filter_num, pool_size等)。  
 但是对于池化层到全连接层的过度有点不是很明白，目前是池化层结束后再将其以一维reshape。
-如有4个filter，池化层结束后的大小是6-by-6，所以reshape(4*6*6)，然后再乘W得到10个labels的值。  
-loss是用softmax+cross-entropy来计算的，目前问题是loss优化到一定数值后就一直在这个数字波动了。  
+如有4个filter，池化层结束后的大小是6-by-6，所以reshape(4×6×6)，然后再乘W得到10个labels的值。  
+loss是用softmax + cross-entropy来计算的，目前问题是loss优化到一定数值后就一直在这个数字波动了。  
 由于教授只讲了convolution layer和pools layer。后面的操作先看看别人的思路再进行。姑且先上传保存下进度吧。
