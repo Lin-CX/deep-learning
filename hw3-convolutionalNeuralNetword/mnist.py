@@ -84,8 +84,8 @@ class nn_convolutional_layer:
         Wshape = self.W.shape
         outputR = xshape[2] - Wshape[2] + 1 # 30
         outputC = xshape[3] - Wshape[3] + 1 # 30
-        depth = xshape[1]       # 3
-        batchSize = xshape[0]     # 8
+        depth = xshape[1]   # 3
+        batchSize = xshape[0]   # 8
         numFilters = Wshape[0]  # 8
 
         out = np.zeros((batchSize, numFilters, outputR, outputC))   # out.shape = (8, 8, 30, 30)
@@ -155,7 +155,7 @@ class nn_convolutional_layer:
                 resultSum = np.zeros((xshape[2], xshape[3]))
                 for f in range(dLdWshape[0]):   # filter number
                     dLdyPad = self.matrixPad(dLdy[i][f], dLdWshape[3]-1, dLdWshape[2]-1)  # dLdy zero padding
-                    #WFlip = matrixFlip(self.W[f][j])                    # flip of W
+                    #WFlip = matrixFlip(self.W[f][j])      # flip of W
                     WFlip = self.matrixFlip(self.W[f][j])
                     dLdyPadShape = dLdyPad.shape    # dLdyPad.shape = (34, 34)
                     WFlipShape = WFlip.shape        # WFlip.shape = (3, 3)
@@ -391,10 +391,10 @@ X_test = mnist_data[2]
 y_test = mnist_data[3]
 
 # Check the size of the training and test data.
-print('Training data shape: ', X_train.shape)       # (60000, 1, 28, 28)
-print('Training labels shape: ', y_train.shape)     # (60000,)
+print('Training data shape: ', X_train.shape)   # (60000, 1, 28, 28)
+print('Training labels shape: ', y_train.shape)  # (60000,)
 print('Test data shape: ', X_test.shape)            # (10000, 1, 28, 28)
-print('Test labels shape: ', y_test.shape)          # (10000,)
+print('Test labels shape: ', y_test.shape)  # (10000,)
 
 # select three random number images
 num_plot = 3
@@ -412,23 +412,23 @@ y = y_train
 Xshape = X.shape
 yshape = y.shape
 
-batch_size = Xshape[0]          # 图的数量
-input_size = Xshape[2]          # 图大小（像素）
-in_ch_size = Xshape[1]          # 图的depth (grayscale or RGB)
+batch_size = Xshape[0]  # 图的数量
+input_size = Xshape[2]  # 图大小（像素）
+in_ch_size = Xshape[1]  # 图的depth (grayscale or RGB)
 filter_width = 5                # filter size
 filter_height = filter_width
-num_filters = 4                 # filter数
+num_filters = 50                    # filter数
 #class_num = y.ptp() + 1            # class数
 class_num = 10
 
-num_train = 9999                # 训练数
+num_train = 1500    # 训练数
 #cnv_lr = 0.03
-#fcl_lr = 0.03                  # learning rate
+#fcl_lr = 0.03  # learning rate
 lr = 1.5
 cnv_lr = lr
-fcl_lr = lr                     # learning rate
-decay = 0.005
-
+fcl_lr = lr   # learning rate
+decay = 0.001
+break_threshold = 10000
 
 # maxpools setting
 mpl_stride = 4
@@ -450,6 +450,11 @@ fcl_input_size = mpl_out_size
 fcl_in_ch_size = num_filters
 fcl_num_filters = class_num
 
+# print parameter
+print('batch_size: %s, num_filters: %s' % (batch_size, num_filters))
+print('lr: %s, decay: %s, lr when 100th: %s, lr when 500th: %s' % (lr, decay, (lr/(1.0+decay*100.0)), (lr/(1.0+decay*500.0))))
+print('break_threshold:', break_threshold)
+
 # function declaration
 # create convolutional layer object
 cnv = nn_convolutional_layer(filter_width, filter_height, input_size, in_ch_size, num_filters, std)
@@ -461,7 +466,7 @@ fcl = nn_convolutional_layer(fcl_filter_width, fcl_filter_height, fcl_input_size
 # softmax cross entropy
 smax_cent = smax_cent_layer()
 # softmax
-smax = nn_softmax_layer()       # 接收 10-by-1的column vector
+smax = nn_softmax_layer()   # 接收 10-by-1的column vector
 # cross entropy
 cent = nn_cross_entropy_layer()
 # loss
@@ -514,7 +519,7 @@ for ntrain in range(num_train): # 训练次数
     print("Cnv current para: weights =", cnv_current_para[0][0][0].reshape(filter_width**2)[13:16], ", bias =", cnv_current_para[1][0][1:4].T)
 
     if ntrain > 10:
-        if loss_out[ntrain-1]+loss_out[ntrain-2]+loss_out[ntrain-3] < 1000:
+        if loss_out[ntrain-1]+loss_out[ntrain-2]+loss_out[ntrain-3] < break_threshold:
             break
 
     # 1/t decay
@@ -522,10 +527,12 @@ for ntrain in range(num_train): # 训练次数
     fcl_lr = cnv_lr
 
 # save
-np.save("cnv_para_test1.npy", cnv.get_weights())
-np.save("fcl_para_test1.npy", fcl.get_weights())
+np.save("cnv_para_test4.npy", cnv.get_weights())
+np.save("fcl_para_test4.npy", fcl.get_weights())
 
 # predict
+#sample_index = [124, 248, 496]
+
 batch_size = 1
 for i in range(num_plot):
     pred_cnv_in = X[sample_index[i]].reshape(1, in_ch_size, input_size, input_size)
@@ -544,7 +551,7 @@ for i in range(num_plot):
 
 # plot the selected images
 for i in range(num_plot):
-    img = np.squeeze(X_train[sample_index[i]])      # 选中图片的重组和, img.shape = (1, 28, 28) --> (28, 28)
+    img = np.squeeze(X_train[sample_index[i]])  # 选中图片的重组和, img.shape = (1, 28, 28) --> (28, 28)
     ax = plt.subplot('1'+str(num_plot)+str(i))
     #print('1'+str(num_plot)+str(i))
     plt.imshow(img,cmap=plt.get_cmap('gray'))
