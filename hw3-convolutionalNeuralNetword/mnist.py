@@ -92,7 +92,7 @@ class nn_convolutional_layer:
 
         for i in range(batchSize):
             for f in range(numFilters):
-                #results = np.zeros((depth, outputR, outputC))   # results.shape = (3, 30, 30)
+                #results = np.zeros((depth, outputR, outputC))  # results.shape = (3, 30, 30)
                 results = np.zeros((outputR, outputC))   # results.shape = (30, 30)
                 for j in range(depth):
                     y = view_as_windows(x[i][j], (Wshape[2], Wshape[3]))
@@ -131,8 +131,8 @@ class nn_convolutional_layer:
                 gradientSum += np.sum(dLdy[j][i])
             # add 8 batches ande divide (batch size * out_width * out_height)
             #dLdb[0][i][0][0] = gradientSum / (xshape[0] * dLdyshape[2] * dLdyshape[3])
-            #dLdb[0][i][0][0] = gradientSum / (xshape[0])
-            dLdb[0][i][0][0] = gradientSum
+            dLdb[0][i][0][0] = gradientSum / (xshape[0])
+            #dLdb[0][i][0][0] = gradientSum
 
         # dLdW  # dLdW.shape = (8, 3, 3, 3)  # convolution of x and dLdy
         dLdW = np.zeros(self.W.shape)
@@ -145,8 +145,8 @@ class nn_convolutional_layer:
                     result = y.dot(dLdy[j][f].reshape(-1, 1))
                     resultSum += np.squeeze(result, axis=2) # 8个batches的梯度和
                 #dLdW[f][i] = np.sum(resultSum, keepdims=True, axis=0) / (dLdWshape[2] * dLdWshape[3] * xshape[0])
-                #dLdW[f][i] = resultSum / (xshape[0])
-                dLdW[f][i] = resultSum
+                dLdW[f][i] = resultSum / (xshape[0])
+                #dLdW[f][i] = resultSum
 
         # dLdx  # dLdx.shape = (8, 3, 32, 32)
         dLdx = np.zeros(xshape)
@@ -166,8 +166,8 @@ class nn_convolutional_layer:
                     y = y.reshape((xOutputR, xOutputC, -1))
                     result = y.dot(WFlip.reshape(-1, 1))
                     resultSum += np.squeeze(result, axis=2) # 8个filters的梯度和
-                #dLdx[i][j] = resultSum / dLdWshape[0]
-                dLdx[i][j] = resultSum
+                dLdx[i][j] = resultSum / dLdWshape[0]
+                #dLdx[i][j] = resultSum
 
         return dLdx, dLdW, dLdb
 
@@ -403,11 +403,11 @@ sample_index = np.random.randint(0,X_train.shape[0],(num_plot,))    # 6万张图
 predicted = np.ones(num_plot)
 
 
-#X = X_train
-#y = y_train
+X = X_train[:10000]
+y = y_train[:10000]
 
-X = X_test[:1000]
-y = y_test[:1000]
+#X = X_test
+#y = y_test
 
 Xshape = X.shape
 yshape = y.shape
@@ -417,26 +417,36 @@ input_size = Xshape[2]          # 图大小（像素）
 in_ch_size = Xshape[1]          # 图的depth (grayscale or RGB)
 filter_width = 5                # filter size
 filter_height = filter_width
-num_filters = 10                # filter数
+num_filters = 10                    # filter数
 #class_num = y.ptp() + 1            # class数
 class_num = 10
 
-num_train = 55                  # 训练数
+num_train = 350                 # 训练数
+#cnv_lr = 0.03
+#fcl_lr = 0.03                  # learning rate
 cnv_lr = 1
 fcl_lr = 1                  # learning rate
 
+
 # maxpools setting
-mpl_stride = 3
-mpl_size = 3
+mpl_stride = 4
+mpl_size = 4
 
 #
 std = 1e0
-dt = 1e-1
+dt = 1e-2
 
 # output size
 conv_out_size = input_size - filter_width + 1
 mpl_out_size = int((conv_out_size - mpl_size) / mpl_stride + 1)
 #print(conv_out_size, mpl_out_size)
+
+# fully connect layer para
+fcl_filter_width = mpl_out_size
+fcl_filter_height = fcl_filter_width
+fcl_input_size = mpl_out_size
+fcl_in_ch_size = num_filters
+fcl_num_filters = class_num
 
 # function declaration
 # create convolutional layer object
@@ -444,7 +454,8 @@ cnv = nn_convolutional_layer(filter_width, filter_height, input_size, in_ch_size
 # max pools
 mpl = nn_max_pooling_layer(stride=mpl_stride, pool_size=mpl_size)
 # fully connect layer
-fcl = fully_connect_layer(in_ch_size*mpl_out_size*mpl_out_size*num_filters, class_num)
+#fcl = fully_connect_layer(in_ch_size*mpl_out_size*mpl_out_size*num_filters, class_num)
+fcl = nn_convolutional_layer(fcl_filter_width, fcl_filter_height, fcl_input_size, fcl_in_ch_size, fcl_num_filters, std)
 # softmax cross entropy
 smax_cent = smax_cent_layer()
 # softmax
@@ -458,109 +469,71 @@ for ntrain in range(num_train): # 训练次数
 #for ntrain in range(0):
 
     # convolution layer
-    cnv_out = cnv.forward(X)    # (5, 2, 25, 25)
+    cnv_out = cnv.forward(X)    # (batch_size, num_filters, conv_out_size, conv_out_size)
+    #print(cnv_out.shape)
 
-
-    mpl_for_each_filter = np.zeros((num_filters, batch_size, in_ch_size, mpl_out_size, mpl_out_size))
-
-    for f in range(num_filters):
-
-        # max pool layer
-        temp = np.zeros((batch_size, conv_out_size, conv_out_size))
-        for i in range(batch_size):
-            temp[i] = cnv_out[i][f]
-        mpl_input = temp.reshape(batch_size, in_ch_size, conv_out_size, conv_out_size)
-        mpl_out = mpl.forward(mpl_input)
-        # 将每个filter卷积后得到的data保存，并进行reshape以实现fully connect
-        mpl_for_each_filter[f] = mpl_out
-
-    # 由于是灰阶, in_ch_size的值只有1所以忽略不计
-    mpl_for_each_filter = mpl_for_each_filter.reshape(num_filters, batch_size, mpl_out_size, mpl_out_size)
-
-    # 以batch_size主导的fully connect layer输入
-    fcl_input = np.zeros((batch_size, num_filters, mpl_out_size, mpl_out_size))
-    for i in range(batch_size):
-        for j in range(num_filters):
-            fcl_input[i][j] = mpl_for_each_filter[j][i]
-    fcl_input = fcl_input.reshape(batch_size, num_filters*mpl_out_size*mpl_out_size)
+    # max pool layer
+    mpl_out = mpl.forward(cnv_out)
 
     # fully connect layer
-    fcl_out = fcl.forward(fcl_input.T)  # (class_num, batch_size)
+    fcl_out = fcl.forward(mpl_out)  # shape = (batch_size, in_ch_size(class_num), mpl_out_size, ~)
 
     # softmax layer
-    smax_out = smax.forward(fcl_out)
+    smax_in = fcl_out.reshape(batch_size, class_num).T
+    smax_out = smax.forward(smax_in)    # shape = (class_num, batch_size)
 
+    # cent loss
     loss_out[ntrain] = cent.forward(smax_out, y)
 
     # back smax and cent layer
-    b_smax_cent_out = cent.backprop(smax_out, y)        # (class_num, batch_size)
+    b_smax_cent_out = cent.backprop(smax_out, y)    # (class_num, batch_size)
 
     # back fully connect layer
-    b_fcl_out_W, b_fcl_out_b, b_fcl_out = fcl.backprop(fcl_input.T, b_smax_cent_out)
-    b_fcl_out = b_fcl_out.T.reshape(batch_size, num_filters, mpl_out_size, mpl_out_size)
+    b_fcl_in = b_smax_cent_out.T.reshape(batch_size, class_num, 1, 1)
+    b_fcl_out, b_fcl_out_W, b_fcl_out_b = fcl.backprop(mpl_out, b_fcl_in)
 
     # back max pool layer
-    b_mpl_input = np.zeros((num_filters, batch_size, in_ch_size, mpl_out_size, mpl_out_size))
-    for i in range(num_filters):
-        for j in range(batch_size):
-            b_mpl_input[i][j] = b_fcl_out[j][i]
+    b_mpl_out = mpl.backprop(cnv_out, b_fcl_out)
 
-    b_mpl_out = np.zeros((num_filters, batch_size, in_ch_size, conv_out_size, conv_out_size))
-    for i in range(num_filters):
-        b_mpl_out[i] = mpl.backprop(mpl_input, b_mpl_input[i])
-    b_mpl_out = b_mpl_out.reshape(num_filters, batch_size, conv_out_size, conv_out_size)
-    
     # back convolution layer
-    b_cnv_in = np.zeros((batch_size, num_filters, conv_out_size, conv_out_size))
-    for i in range(num_filters):
-        for j in range(batch_size):
-            b_cnv_in[j][i] = b_mpl_out[i][j]
-    b_cnv_out, b_cnv_out_W, b_cnv_out_b = cnv.backprop(X, b_cnv_in)
+    b_cnv_out, b_cnv_out_W, b_cnv_out_b = cnv.backprop(X, b_mpl_out)
 
     # update convolution layer
     cnv.update_weights(-b_cnv_out_W*cnv_lr, -b_cnv_out_b*cnv_lr)
 
     # update fully connect layer
-    #fcl.update_weights(dLdW=-b_fcl_out_W*fcl_lr, dLdb=-b_fcl_out_b*fcl_lr)
+    fcl.update_weights(-b_fcl_out_W*fcl_lr, -b_fcl_out_b*fcl_lr)
 
-    # show loss
-    print("%sth training\nloss: %s" % (ntrain, loss_out[ntrain]))
-    print("Cnv update: weights = %s, bias = %s" % (b_cnv_out_W[0][0].reshape(filter_width**2)[13:18]*cnv_lr, b_cnv_out_b[0][3:8].T*cnv_lr))
+    # show info
+    print()
+    print("[%s] th training\nloss: %s" % (ntrain, loss_out[ntrain]))
+    print("Cnv update: weights = %s, bias = %s" % (b_cnv_out_W[0][0].reshape(filter_width**2)[13:16]*cnv_lr, b_cnv_out_b[0][3:6].T*cnv_lr))
     cnv_current_para = cnv.get_weights()
-    print("Cnv current para: weights =", cnv_current_para[0][0][0].reshape(filter_width**2)[13:18], ", bias =", cnv_current_para[1][0][3:8].T)
+    print("Cnv current para: weights =", cnv_current_para[0][0][0].reshape(filter_width**2)[13:16], ", bias =", cnv_current_para[1][0][3:6].T)
 
+    if ntrain > 10:
+        if loss_out[ntrain-1]+loss_out[ntrain-2]+loss_out[ntrain-3] < 100:
+            # save data
+            np.save("cnv_para.npy", cnv.get_weights())
+            np.save("fcl_para.npy", fcl.get_weights())
+            break
 
 # predict
-sample_index = [15, 300, 150]
+sample_index = [1024, 2048, 4096]
 
 batch_size = 1
 for i in range(num_plot):
     pred_cnv_in = X[sample_index[i]].reshape(1, in_ch_size, input_size, input_size)
     pred_cnv_out = cnv.forward(pred_cnv_in)
 
-    for f in range(num_filters):
+    pred_mpl_out = mpl.forward(pred_cnv_out)
 
-        # max pool layer
-        temp = np.zeros((batch_size, conv_out_size, conv_out_size))
-        for i in range(batch_size):
-            temp[i] = pred_cnv_out[i][f]
-        mpl_input = temp.reshape(batch_size, in_ch_size, conv_out_size, conv_out_size)
-        mpl_out = mpl.forward(mpl_input)
-        # 将每个filter卷积后得到的data保存，并进行reshape以实现fully connect
-        mpl_for_each_filter[f] = mpl_out
+    pred_fcl_out = fcl.forward(pred_mpl_out)
 
-    # 以batch_size主导的fully connect layer输入
-    fcl_input = np.zeros((batch_size, num_filters, mpl_out_size, mpl_out_size))
-    for i in range(batch_size):
-        for j in range(num_filters):
-            fcl_input[i][j] = mpl_for_each_filter[j][i]
-    fcl_input = fcl_input.reshape(batch_size, num_filters*mpl_out_size*mpl_out_size)
+    pred_smax_in = pred_fcl_out.reshape(batch_size, class_num).T
+    pred_smax_out = smax.forward(pred_smax_in)
 
-    # fully connect layer
-    fcl_out = fcl.forward(fcl_input.T)  # (class_num, batch_size)
-
-    smax_out = smax.forward(fcl_out)
-    predicted[i] = np.argmax(smax_out)
+    predicted[i] = np.argmax(pred_smax_out)
 
 
 
@@ -568,11 +541,15 @@ for i in range(num_plot):
 for i in range(num_plot):
     img = np.squeeze(X_train[sample_index[i]])      # 选中图片的重组和, img.shape = (1, 28, 28) --> (28, 28)
     ax = plt.subplot('1'+str(num_plot)+str(i))
+    #print('1'+str(num_plot)+str(i))
     plt.imshow(img,cmap=plt.get_cmap('gray'))
     ######
     ## Q5. Complete the below function ax.set_title
     tt = predicted[i]
     #####
-    ax.set_title(tt)
+    ax.set_title(predicted[i])
+    #print(y_train[sample_index[i]])
+
+print(predicted)
 
 plt.show()
