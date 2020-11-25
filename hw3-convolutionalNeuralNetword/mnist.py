@@ -403,8 +403,8 @@ sample_index = np.random.randint(0,X_train.shape[0],(num_plot,))    # 6万张图
 predicted = np.ones(num_plot)
 
 
-X = X_train[:10000]
-y = y_train[:10000]
+X = X_train
+y = y_train
 
 #X = X_test
 #y = y_test
@@ -421,7 +421,7 @@ num_filters = 10                    # filter数
 #class_num = y.ptp() + 1            # class数
 class_num = 10
 
-num_train = 350                 # 训练数
+num_train = 999                 # 训练数
 #cnv_lr = 0.03
 #fcl_lr = 0.03                  # learning rate
 cnv_lr = 1
@@ -506,20 +506,20 @@ for ntrain in range(num_train): # 训练次数
 
     # show info
     print()
-    print("[%s] th training\nloss: %s" % (ntrain, loss_out[ntrain]))
+    print("[%s]th training\nloss: %s" % (ntrain, loss_out[ntrain]))
     print("Cnv update: weights = %s, bias = %s" % (b_cnv_out_W[0][0].reshape(filter_width**2)[13:16]*cnv_lr, b_cnv_out_b[0][3:6].T*cnv_lr))
     cnv_current_para = cnv.get_weights()
     print("Cnv current para: weights =", cnv_current_para[0][0][0].reshape(filter_width**2)[13:16], ", bias =", cnv_current_para[1][0][3:6].T)
 
     if ntrain > 10:
-        if loss_out[ntrain-1]+loss_out[ntrain-2]+loss_out[ntrain-3] < 100:
+        if loss_out[ntrain-1]+loss_out[ntrain-2]+loss_out[ntrain-3] < 1000:
             # save data
             np.save("cnv_para.npy", cnv.get_weights())
             np.save("fcl_para.npy", fcl.get_weights())
             break
 
 # predict
-sample_index = [1024, 2048, 4096]
+#sample_index = [1024, 2048, 4096]
 
 batch_size = 1
 for i in range(num_plot):
