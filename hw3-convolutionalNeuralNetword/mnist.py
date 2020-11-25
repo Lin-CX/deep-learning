@@ -513,10 +513,11 @@ for ntrain in range(num_train): # 训练次数
 
     if ntrain > 10:
         if loss_out[ntrain-1]+loss_out[ntrain-2]+loss_out[ntrain-3] < 1000:
-            # save data
-            np.save("cnv_para.npy", cnv.get_weights())
-            np.save("fcl_para.npy", fcl.get_weights())
             break
+
+# save
+np.save("cnv_para_test1.npy", cnv.get_weights())
+np.save("fcl_para_test1.npy", fcl.get_weights())
 
 # predict
 #sample_index = [1024, 2048, 4096]
