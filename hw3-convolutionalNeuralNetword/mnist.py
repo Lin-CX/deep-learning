@@ -417,15 +417,17 @@ input_size = Xshape[2]          # 图大小（像素）
 in_ch_size = Xshape[1]          # 图的depth (grayscale or RGB)
 filter_width = 5                # filter size
 filter_height = filter_width
-num_filters = 10                    # filter数
+num_filters = 4                 # filter数
 #class_num = y.ptp() + 1            # class数
 class_num = 10
 
-num_train = 999                 # 训练数
+num_train = 9999                # 训练数
 #cnv_lr = 0.03
 #fcl_lr = 0.03                  # learning rate
-cnv_lr = 1
-fcl_lr = 1                  # learning rate
+lr = 1.5
+cnv_lr = lr
+fcl_lr = lr                     # learning rate
+decay = 0.005
 
 
 # maxpools setting
@@ -506,22 +508,24 @@ for ntrain in range(num_train): # 训练次数
 
     # show info
     print()
-    print("[%s]th training\nloss: %s" % (ntrain, loss_out[ntrain]))
-    print("Cnv update: weights = %s, bias = %s" % (b_cnv_out_W[0][0].reshape(filter_width**2)[13:16]*cnv_lr, b_cnv_out_b[0][3:6].T*cnv_lr))
+    print("[%s]th epoch\nloss: %s" % (ntrain, loss_out[ntrain]))
+    print("Cnv update: weights = %s, bias = %s" % (b_cnv_out_W[0][0].reshape(filter_width**2)[13:16]*cnv_lr, b_cnv_out_b[0][1:4].T*cnv_lr))
     cnv_current_para = cnv.get_weights()
-    print("Cnv current para: weights =", cnv_current_para[0][0][0].reshape(filter_width**2)[13:16], ", bias =", cnv_current_para[1][0][3:6].T)
+    print("Cnv current para: weights =", cnv_current_para[0][0][0].reshape(filter_width**2)[13:16], ", bias =", cnv_current_para[1][0][1:4].T)
 
     if ntrain > 10:
         if loss_out[ntrain-1]+loss_out[ntrain-2]+loss_out[ntrain-3] < 1000:
             break
+
+    # 1/t decay
+    cnv_lr = lr * 1.0/(1.0+decay*ntrain)
+    fcl_lr = cnv_lr
 
 # save
 np.save("cnv_para_test1.npy", cnv.get_weights())
 np.save("fcl_para_test1.npy", fcl.get_weights())
 
 # predict
-#sample_index = [1024, 2048, 4096]
-
 batch_size = 1
 for i in range(num_plot):
     pred_cnv_in = X[sample_index[i]].reshape(1, in_ch_size, input_size, input_size)
