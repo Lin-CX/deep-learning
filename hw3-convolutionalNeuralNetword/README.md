@@ -2,7 +2,7 @@
 这是主要基于python的numpy实现的卷积神经网络(convolutional neural network)，具体内容可查看作业说明PDF和代码文件~  
 
 
-## 运行截图
+## 运行截图  
 **运行时的样子**
 <div  align="center">    
     <img src="https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/运行时的样子.png" align=center />
@@ -10,12 +10,12 @@
 
 **Input**: (6+1)万张28x28x1的手写数字图片
 <div  align="center">    
-    <img src="https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/input_ex.png" width = "100" height = "100" alt="input image" align=center />
+    <img src="https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/input_ex.png" alt="input image" align=center />
 </div>  
 
 **output**: 随机选择的num_plot张带着label的输出
 <div  align="center">    
-    <img src="https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/output_ex.png" width = "100" height = "100" alt="output image" align=center />
+    <img src="https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/output_ex.png" alt="output image" align=center />
 </div>
 
 # 项目说明
@@ -33,7 +33,8 @@
 # 一些开关参数
 load_para           # True表示加载已有卷积核，False表示使用随机生成的卷积核
 is_learning         # True表示学习，False表示只是测试图片
-    ```
+    ```  
+
     ```
 # 模型的参数
 num_plot            # 想测试的图片数量
@@ -58,7 +59,7 @@ fclRMS_r_W = 0
 alpha
     ```  
     
- **下面是学习部分的代码介绍**
+ **下面是学习部分的代码介绍**  
     ```
     # convolution layer
     
@@ -154,7 +155,7 @@ alpha
     
         # 将预测结果保存到predicted中
         predicted[i] = np.argmax(pred_smax_out)
-    ```
+    ```  
     最后的话将结果通过plt输出得到上述的output中的样子。
 
 
