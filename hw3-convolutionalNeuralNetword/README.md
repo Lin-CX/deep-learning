@@ -29,13 +29,14 @@
 * 模型运行的流程  
 
     **下面是设定的各种参数**  
-    ```
-# 一些开关参数
-load_para           # True表示加载已有卷积核，False表示使用随机生成的卷积核
-is_learning         # True表示学习，False表示只是测试图片
-    ```  
 
-    ```
+```
+	# 一些开关参数
+	load_para           # True表示加载已有卷积核，False表示使用随机生成的卷积核
+	is_learning         # True表示学习，False表示只是测试图片
+```  
+
+```
 # 模型的参数
 num_plot            # 想测试的图片数量
 sample_index        # batch_size张图中随机选num_plot张
@@ -57,10 +58,10 @@ M                   # Mini-SGD的参数
 cnvRMS_r_W = 0      # RMSProp的参数
 fclRMS_r_W = 0
 alpha
-    ```  
+```  
     
  **下面是学习部分的代码介绍**  
-    ```
+```
     # convolution layer
     
     # 首先将图片输入到卷积层 (convolution layer)
@@ -129,10 +130,10 @@ alpha
     fcl_lr = cnv_lr
     
     # 学习结束，进行下一次的学习。
-    ```  
-    
+```  
+
     **下面是预测的过程**  
-    ```
+```
     # 因为每次只预测一张图所以把batch_size设置成1
     batch_size = 1
     # 对num_plot张图进行预测
@@ -155,7 +156,7 @@ alpha
     
         # 将预测结果保存到predicted中
         predicted[i] = np.argmax(pred_smax_out)
-    ```  
+```  
     最后的话将结果通过plt输出得到上述的output中的样子。
 
 
