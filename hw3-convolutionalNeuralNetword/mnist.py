@@ -1,9 +1,32 @@
+# ------------------------------------------
+#  Author: LinCX
+#   Computer Science & Engineering
+#   College of Informatics, Korea Univ.
+#
+#  Date:   Nov 27, 2020
+# ------------------------------------------
+"""
+
+This is 500,000 loss version.
+Please use search(ctrl+f) to find the parameter
+
+Switch parameter:
+load_para       True: Load existing convolution kernel   
+is_learning     If is_learning == True, then start training.
+                Set it False if just test.
+
+Model parameter:
+num_plot        Nunber of random test image
+介绍懒得写了 凑合用吧
+
+"""
 import numpy as np
 import os
 import urllib.request
 import gzip
 import matplotlib.pyplot as plt
 from skimage.util.shape import view_as_windows
+import random
 
 def load_mnist():
     url_tr_dat = 'http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz'
@@ -139,13 +162,13 @@ class nn_convolutional_layer:
         for f in range(dLdyshape[1]):   # filter number
             for i in range(xshape[1]):  # depth
                 resultSum = np.zeros((outputR, outputC))
-                for j in range(xshape[0]):  # batch size
+                for j in random.sample(range(1, xshape[0]), M):  # batch size
                     y = view_as_windows(x[j][i], (dLdyshape[2], dLdyshape[3]))
                     y = y.reshape((outputR, outputC, -1))
                     result = y.dot(dLdy[j][f].reshape(-1, 1))
                     resultSum += np.squeeze(result, axis=2) # 8个batches的梯度和
                 #dLdW[f][i] = np.sum(resultSum, keepdims=True, axis=0) / (dLdWshape[2] * dLdWshape[3] * xshape[0])
-                dLdW[f][i] = resultSum / (xshape[0])
+                dLdW[f][i] = resultSum / M
                 #dLdW[f][i] = resultSum
 
         # dLdx  # dLdx.shape = (8, 3, 32, 32)
@@ -399,15 +422,11 @@ print('Test labels shape: ', y_test.shape)  # (10000,)
 # select three random number images
 num_plot = 3
 sample_index = np.random.randint(0,X_train.shape[0],(num_plot,))    # 6万张图中随机选三张
-
 predicted = np.ones(num_plot)
 
 
 X = X_train
 y = y_train
-
-#X = X_test
-#y = y_test
 
 Xshape = X.shape
 yshape = y.shape
@@ -415,20 +434,26 @@ yshape = y.shape
 batch_size = Xshape[0]  # 图的数量
 input_size = Xshape[2]  # 图大小（像素）
 in_ch_size = Xshape[1]  # 图的depth (grayscale or RGB)
-filter_width = 5                # filter size
+filter_width = 5                    # filter size
 filter_height = filter_width
-num_filters = 50                    # filter数
-#class_num = y.ptp() + 1            # class数
-class_num = 10
+num_filters = 25                    # filter数
+class_num = 10                      # class数
 
-num_train = 1500    # 训练数
-#cnv_lr = 0.03
-#fcl_lr = 0.03  # learning rate
-lr = 1.5
+# switch
+load_para = True
+is_learning = False
+
+# some para
+num_train = 50                      # 训练数
+lr = 3.0
 cnv_lr = lr
-fcl_lr = lr   # learning rate
-decay = 0.001
-break_threshold = 10000
+fcl_lr = lr                         # learning rate
+decay = 0.1
+break_threshold = 100000
+M = 256
+cnvRMS_r_W = 0
+fclRMS_r_W = 0
+alpha = 0.9
 
 # maxpools setting
 mpl_stride = 4
@@ -453,7 +478,7 @@ fcl_num_filters = class_num
 # print parameter
 print('batch_size: %s, num_filters: %s' % (batch_size, num_filters))
 print('lr: %s, decay: %s, lr when 100th: %s, lr when 500th: %s' % (lr, decay, (lr/(1.0+decay*100.0)), (lr/(1.0+decay*500.0))))
-print('break_threshold:', break_threshold)
+print('break_threshold: %s, SGD M: %s' % (break_threshold, M))
 
 # function declaration
 # create convolutional layer object
@@ -472,66 +497,80 @@ cent = nn_cross_entropy_layer()
 # loss
 loss_out = np.zeros(num_train)
 
-for ntrain in range(num_train): # 训练次数
-#for ntrain in range(0):
+# load para
+if load_para == True:
+    cnv_load = np.load("cnv_para_save.npy", allow_pickle = True)
+    fcl_load = np.load("fcl_para_save.npy", allow_pickle = True)
+    cnv.set_weights(cnv_load[0], cnv_load[1])
+    fcl.set_weights(fcl_load[0], fcl_load[1])
 
-    # convolution layer
-    cnv_out = cnv.forward(X)    # (batch_size, num_filters, conv_out_size, conv_out_size)
-    #print(cnv_out.shape)
+if is_learning == True:
+    for ntrain in range(num_train): # 训练次数
+    #for ntrain in range(0):
 
-    # max pool layer
-    mpl_out = mpl.forward(cnv_out)
+        # convolution layer
+        cnv_out = cnv.forward(X)    # (batch_size, num_filters, conv_out_size, conv_out_size)
+        #print(cnv_out.shape)
 
-    # fully connect layer
-    fcl_out = fcl.forward(mpl_out)  # shape = (batch_size, in_ch_size(class_num), mpl_out_size, ~)
+        # max pool layer
+        mpl_out = mpl.forward(cnv_out)
 
-    # softmax layer
-    smax_in = fcl_out.reshape(batch_size, class_num).T
-    smax_out = smax.forward(smax_in)    # shape = (class_num, batch_size)
+        # fully connect layer
+        fcl_out = fcl.forward(mpl_out)  # shape = (batch_size, in_ch_size(class_num), mpl_out_size, ~)
 
-    # cent loss
-    loss_out[ntrain] = cent.forward(smax_out, y)
+        # softmax layer
+        smax_in = fcl_out.reshape(batch_size, class_num).T
+        smax_out = smax.forward(smax_in)    # shape = (class_num, batch_size)
 
-    # back smax and cent layer
-    b_smax_cent_out = cent.backprop(smax_out, y)    # (class_num, batch_size)
+        # cent loss
+        loss_out[ntrain] = cent.forward(smax_out, y)
 
-    # back fully connect layer
-    b_fcl_in = b_smax_cent_out.T.reshape(batch_size, class_num, 1, 1)
-    b_fcl_out, b_fcl_out_W, b_fcl_out_b = fcl.backprop(mpl_out, b_fcl_in)
+        # back smax and cent layer
+        b_smax_cent_out = cent.backprop(smax_out, y)    # (class_num, batch_size)
 
-    # back max pool layer
-    b_mpl_out = mpl.backprop(cnv_out, b_fcl_out)
+        # back fully connect layer
+        b_fcl_in = b_smax_cent_out.T.reshape(batch_size, class_num, 1, 1)
+        b_fcl_out, b_fcl_out_W, b_fcl_out_b = fcl.backprop(mpl_out, b_fcl_in)
 
-    # back convolution layer
-    b_cnv_out, b_cnv_out_W, b_cnv_out_b = cnv.backprop(X, b_mpl_out)
+        # back max pool layer
+        b_mpl_out = mpl.backprop(cnv_out, b_fcl_out)
 
-    # update convolution layer
-    cnv.update_weights(-b_cnv_out_W*cnv_lr, -b_cnv_out_b*cnv_lr)
+        # back convolution layer
+        b_cnv_out, b_cnv_out_W, b_cnv_out_b = cnv.backprop(X, b_mpl_out)
 
-    # update fully connect layer
-    fcl.update_weights(-b_fcl_out_W*fcl_lr, -b_fcl_out_b*fcl_lr)
+        # RMSProp
+        cnvRMS_r_W = (alpha*cnvRMS_r_W) + (1-alpha) * (b_cnv_out_W**2)
+        cnvRMS_W = (cnv_lr*b_cnv_out_W) / (cnvRMS_r_W**0.5+1e-7)
+        fclRMS_r_W = (alpha*fclRMS_r_W) + (1-alpha) * (b_fcl_out_W**2)
+        fclRMS_r = (fcl_lr*b_fcl_out_W) / (fclRMS_r_W**0.5+1e-7)
 
-    # show info
-    print()
-    print("[%s]th epoch\nloss: %s" % (ntrain, loss_out[ntrain]))
-    print("Cnv update: weights = %s, bias = %s" % (b_cnv_out_W[0][0].reshape(filter_width**2)[13:16]*cnv_lr, b_cnv_out_b[0][1:4].T*cnv_lr))
-    cnv_current_para = cnv.get_weights()
-    print("Cnv current para: weights =", cnv_current_para[0][0][0].reshape(filter_width**2)[13:16], ", bias =", cnv_current_para[1][0][1:4].T)
+        # update convolution layer
+        cnv.update_weights(-cnvRMS_W, -b_cnv_out_b*cnv_lr)
 
-    if ntrain > 10:
-        if loss_out[ntrain-1]+loss_out[ntrain-2]+loss_out[ntrain-3] < break_threshold:
-            break
+        # update fully connect layer
+        fcl.update_weights(-fclRMS_r, -b_fcl_out_b*fcl_lr)
 
-    # 1/t decay
-    cnv_lr = lr * 1.0/(1.0+decay*ntrain)
-    fcl_lr = cnv_lr
+        # show info
+        print()
+        print("[%s]th epoch(s)\nloss: %s" % (ntrain, loss_out[ntrain]))
+        print("Cnv update: weights = %s, bias = %s" % (b_cnv_out_W[0][0].reshape(filter_width**2)[13:16]*cnv_lr, b_cnv_out_b[0][1:4].T*cnv_lr))
+        cnv_current_para = cnv.get_weights()
+        print("Cnv current para: weights =", cnv_current_para[0][0][0].reshape(filter_width**2)[13:16], ", bias =", cnv_current_para[1][0][1:4].T)
 
-# save
-np.save("cnv_para_test4.npy", cnv.get_weights())
-np.save("fcl_para_test4.npy", fcl.get_weights())
+        if ntrain > 10:
+            if loss_out[ntrain-1]+loss_out[ntrain-2]+loss_out[ntrain-3] < break_threshold:
+                break
+
+        # 1/t decay
+        cnv_lr = lr * 1.0 / (1.0+decay*ntrain)
+        fcl_lr = cnv_lr
+
+    # save
+    np.save("cnv_para_save.npy", cnv.get_weights())
+    np.save("fcl_para_save.npy", fcl.get_weights())
 
 # predict
-#sample_index = [124, 248, 496]
+#sample_index = [104, 238, 446]
 
 batch_size = 1
 for i in range(num_plot):
@@ -562,6 +601,5 @@ for i in range(num_plot):
     ax.set_title(predicted[i])
     #print(y_train[sample_index[i]])
 
-print(predicted)
-
+#print(predicted)
 plt.show()
