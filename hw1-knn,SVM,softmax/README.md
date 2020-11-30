@@ -1,17 +1,19 @@
 # Introduction
-主要基于numpy的自己计算实现knn, softmax, entropy-cross。  
-其中softmax和entropy-cross的最优化是由minimize函数实现。  
-因为本作业目的是熟悉使用softmax和entropy-cross计算loss。
+* 主要基于numpy的自己计算实现的knn, softmax, cross-entropy, SVM。  
+* 其中SVM和softmax, cross-entropy实现分类是基于minimize函数。  
+	* 流程为：计算出loss之后带入minimize，找到能生成最小loss的函数。
+	* 使用该函数进行分类。
+* 本作业目的只是熟悉使用SVM, softmax和cross-entropy计算loss，所以minimize只是测试工具。
 
 # 运行结果
 ### input数据分布图  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1-knn,SVM,softmax/data_distribution.png)  
+![image](./data_distribution.png)  
   
 ### knn  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1-knn,SVM,softmax/knn.png)  
+![image](./knn.png)  
   
 ### softmax  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1-knn,SVM,softmax/softmax.png)  
+![image](./softmax.png)  
   
 ### SVM  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw1-knn,SVM,softmax/SVM.png)
+![image](./SVM.png)
