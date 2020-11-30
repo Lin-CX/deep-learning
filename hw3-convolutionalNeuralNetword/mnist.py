@@ -100,9 +100,6 @@ class nn_convolutional_layer:
         self.W = W
         self.b = b
 
-    #######
-    # Q1. Complete this method
-    #######
     def forward(self, x):
         # x.shape = (8, 3, 32, 32)
         # W.shape = (8, 3, 3, 3)
@@ -133,11 +130,6 @@ class nn_convolutional_layer:
         #print(out.shape)   # (8, 8, 30, 30)
         return out
 
-
-
-    #######
-    # Q2. Complete this method
-    #######
     def backprop(self, x, dLdy):
         # x.shape = (8, 3, 32, 32)
         # dLdy.shape = (8, 8, 30, 30)
@@ -220,9 +212,6 @@ class nn_max_pooling_layer:
         ## If necessary, you can define additional class variables here
         #######
 
-    #######
-    # Q3. Complete this method
-    #######
     def forward(self, x):
         # x.shape = (8, 3, 32, 32)
         xshape = x.shape
@@ -303,15 +292,10 @@ class fully_connect_layer:
         self.W = np.random.normal(0, std, (output_size, input_size))
         self.b = np.random.normal(0, std, (output_size, 1))
 
-    ######
-    ## Q1
     def forward(self, x):
         s = self.W @ x + self.b
         return s
 
-    ######
-    ## Q2
-    ## returns three parameters
     def backprop(self, x, dLdy):
         #lenc(x)        4 20
         #lenc(dLdy)  2 20
@@ -341,16 +325,12 @@ class nn_softmax_layer:
     def __init__(self):
         pass
 
-    ######
-    ## Q5
     def forward(self, x):
         s_exp = np.exp(x - np.max(x, axis=0))
         s_sum = np.sum(s_exp, axis=0, keepdims=True)
         sc = s_exp / s_sum
         return sc
 
-    ######
-    ## Q6
     def backprop(self, x, dLdy):
         return dLdy
 
@@ -372,8 +352,6 @@ class nn_cross_entropy_layer:
 
         return CEloss
 
-    ######
-    ## Q8
     def backprop(self, x, y):
         gradient = x
         ylen = len(y)
