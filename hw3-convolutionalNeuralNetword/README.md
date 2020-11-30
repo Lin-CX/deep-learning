@@ -27,7 +27,7 @@
 本卷积神经网络基于 [Mini-SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) + [1/t decay](https://www.jianshu.com/p/d8222a84613c) + [RMSProp](https://zhuanlan.zhihu.com/p/79981927) 实现  
 * 总共有两个py文件：nn.py和mnist.py   
     * nn.py 负责实现convolutional_layer和max_pooling_layer两个layers的正确与否测试。  
-    * mnist.py 负责图像识别的整个卷积神经网络模型构建（主要内容在这）。  
+    * mnist.py 负责图像识别的整个卷积神经网络模型构建（**主要内容在这**）。  
 
 * 关于mnist文件  
     * 同步上传了已经训练过的卷积层和全连接层的卷积核，如果想直接测试请按"load_para=True"和"is_learning=False"设置。  
