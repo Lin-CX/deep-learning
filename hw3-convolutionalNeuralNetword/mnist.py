@@ -224,9 +224,6 @@ class nn_max_pooling_layer:
 
         return out
 
-    #######
-    # Q4. Complete this method
-    #######
     def backprop(self, x, dLdy):
         # x.shape = (8, 3, 32, 32)
         # dLdy.shape = (8, 3, 16, 16)
@@ -589,8 +586,7 @@ for i in range(num_plot):
     img = np.squeeze(X[sample_index[i]])
     ax = plt.subplot('1'+str(num_plot)+str(i))
     plt.imshow(img,cmap=plt.get_cmap('gray'))
-    ######
-    ## Q5. Complete the below function ax.set_title
+
     tt = predicted[i]
     #####
     ax.set_title(predicted[i])
