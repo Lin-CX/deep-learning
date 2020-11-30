@@ -1,39 +1,48 @@
 # hw3 introduction
 这是主要基于python的numpy实现的卷积神经网络(convolutional neural network)，具体内容可查看作业说明PDF和代码文件~  
 
+本卷积神经网络基于 [Mini-SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) + [1/t decay](https://www.jianshu.com/p/d8222a84613c) + [RMSProp](https://zhuanlan.zhihu.com/p/79981927) 实现。  
+
+关于CNN的说明可以参考[这篇文章](https://medium.com/@pkqiang49/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-cnn-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86-%E7%8B%AC%E7%89%B9%E4%BB%B7%E5%80%BC-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8-6047fb2add35)。讲的很好很有意思也没有涉及太多拗口难懂的知识。  
+
 
 ## 运行截图  
 **运行时的样子**
 <div  align="center">    
-    <img src="https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/运行时的样子.png" align=center />
+    <img src="./运行时的样子.png" align=center />
 </div> 
 
 **Input**: (6+1)万张28x28x1的手写数字图片
 <div  align="center">    
-    <img src="https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/input_ex.png" alt="input image" align=center />
+    <img src="./input_ex.png" alt="input image" align=center />
 </div>  
 
 **output**: 随机选择的num_plot张带着label的输出
 <div  align="center">    
-    <img src="https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/output_ex.png" alt="output image" align=center />
+    <img src="./output_ex.png" alt="output image" align=center />
 </div>
 
 # 项目说明
 首先感谢一个朋友，自己的电脑太烂所以用他的电脑帮我跑，帮了很大的忙。 感谢🦀🦀。  
-本卷积神经网络基于 [Mini-SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) + [1/t decay](https://www.jianshu.com/p/d8222a84613c) + [RMSProp](https://zhuanlan.zhihu.com/p/79981927) 实现
+本卷积神经网络基于 [Mini-SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) + [1/t decay](https://www.jianshu.com/p/d8222a84613c) + [RMSProp](https://zhuanlan.zhihu.com/p/79981927) 实现  
 * 总共有两个py文件：nn.py和mnist.py   
     * nn.py 负责实现convolutional_layer和max_pooling_layer两个layers的正确与否测试。  
     * mnist.py 负责图像识别的整个卷积神经网络模型构建（主要内容在这）。  
+
+* 关于mnist文件  
+    * 同步上传了已经训练过的卷积层和全连接层的卷积核，如果想直接测试请按"load_para=True"和"is_learning=False"设置。  
+    * 如果想自己体验一次学习请按请按"load_para=False"和"is_learning=True"设置。  
+    * 各个参数意义在下面有说明。  
     
-    
+
 * 模型运行的流程  
 
     **下面是设定的各种参数**  
 
 ```
 # 一些开关参数
-load_para         # True表示加载已有卷积核，False表示使用随机生成的卷积核
-is_learning   # True表示学习，False表示只是测试图片
+load_para           # True表示加载已有卷积核，False表示使用随机生成的卷积核
+is_learning         # True表示学习，False表示只是测试图片
 ```  
 
 ```

@@ -1,25 +1,29 @@
 # ------------------------------------------
-#  Author: LinCX
-#   Computer Science & Engineering
-#   College of Informatics, Korea Univ.
-#
-#  Date:   Nov 27, 2020
+# Author: 임준상
+# 
+# Date: Nov 29, 2020
 # ------------------------------------------
-"""
 
-This is 500,000 loss version.
-Please use search(ctrl+f) to find the parameter
+"""
+Please use search(ctrl+f) to find the parameter.
 
 Switch parameter:
-load_para       True: Load existing convolution kernel   
-is_learning     If is_learning == True, then start training.
-                Set it False if just test.
+    load_para:      If True, then load existing W and b.
+                    Otherwise, use randomly generated W and b.
 
-Model parameter:
-num_plot        Nunber of random test image
-介绍懒得写了 凑合用吧
+    is_learning:    If True, then training the model.
+
+    If you just test the accuracy of image recognition,
+    set the "load_para = True" and "is_learning = False".
+
+    If you want training model then predict image value,
+    set the "load_para = False" and "is_learning = True".
+    (It will take a lot of time)
+
+This model is base on Mini-SGD + 1/t decay + RMSProp
 
 """
+
 import numpy as np
 import os
 import urllib.request
@@ -107,7 +111,7 @@ class nn_convolutional_layer:
         Wshape = self.W.shape
         outputR = xshape[2] - Wshape[2] + 1 # 30
         outputC = xshape[3] - Wshape[3] + 1 # 30
-        depth = xshape[1]   # 3
+        depth = xshape[1]     # 3
         batchSize = xshape[0]   # 8
         numFilters = Wshape[0]  # 8
 
@@ -178,7 +182,7 @@ class nn_convolutional_layer:
                 resultSum = np.zeros((xshape[2], xshape[3]))
                 for f in range(dLdWshape[0]):   # filter number
                     dLdyPad = self.matrixPad(dLdy[i][f], dLdWshape[3]-1, dLdWshape[2]-1)  # dLdy zero padding
-                    #WFlip = matrixFlip(self.W[f][j])      # flip of W
+                    #WFlip = matrixFlip(self.W[f][j])            # flip of W
                     WFlip = self.matrixFlip(self.W[f][j])
                     dLdyPadShape = dLdyPad.shape    # dLdyPad.shape = (34, 34)
                     WFlipShape = WFlip.shape        # WFlip.shape = (3, 3)
@@ -205,6 +209,7 @@ class nn_convolutional_layer:
     def matrixPad(self, x, Rpad, Cpad):
         return np.pad(x, ((Rpad, Rpad), (Cpad, Cpad)), constant_values = (0, 0))
     #######
+
 
 
 class nn_max_pooling_layer:
@@ -288,6 +293,8 @@ class nn_max_pooling_layer:
 
         return out
 
+
+
 class fully_connect_layer:
 
     # linear layer.
@@ -328,6 +335,8 @@ class fully_connect_layer:
         self.W = self.W + dLdW
         self.b = self.b + dLdb
 
+
+
 class nn_softmax_layer:
     def __init__(self):
         pass
@@ -344,6 +353,7 @@ class nn_softmax_layer:
     ## Q6
     def backprop(self, x, dLdy):
         return dLdy
+
 
 
 class nn_cross_entropy_layer:
@@ -370,6 +380,7 @@ class nn_cross_entropy_layer:
         for i in range(ylen):
             gradient[y[i]][i] -= 1
         return gradient / ylen
+
 
 
 class smax_cent_layer:
@@ -414,43 +425,48 @@ X_test = mnist_data[2]
 y_test = mnist_data[3]
 
 # Check the size of the training and test data.
-print('Training data shape: ', X_train.shape)   # (60000, 1, 28, 28)
-print('Training labels shape: ', y_train.shape)  # (60000,)
+print('Training data shape: ', X_train.shape)       # (60000, 1, 28, 28)
+print('Training labels shape: ', y_train.shape)     # (60000,)
 print('Test data shape: ', X_test.shape)            # (10000, 1, 28, 28)
-print('Test labels shape: ', y_test.shape)  # (10000,)
-
-# select three random number images
-num_plot = 3
-sample_index = np.random.randint(0,X_train.shape[0],(num_plot,))    # 6万张图中随机选三张
-predicted = np.ones(num_plot)
-
-
-X = X_train
-y = y_train
-
-Xshape = X.shape
-yshape = y.shape
-
-batch_size = Xshape[0]  # 图的数量
-input_size = Xshape[2]  # 图大小（像素）
-in_ch_size = Xshape[1]  # 图的depth (grayscale or RGB)
-filter_width = 5                    # filter size
-filter_height = filter_width
-num_filters = 25                    # filter数
-class_num = 10                      # class数
+print('Test labels shape: ', y_test.shape)           # (10000,)
 
 # switch
 load_para = True
 is_learning = False
 
+#X = np.concatenate((X_train, X_test), axis=0)
+#y = np.concatenate((y_train, y_test), axis=0)
+
+X = X_train
+y = y_train
+
+#X = X_test
+#y = y_test
+
+# select three random number images
+num_plot = 3
+sample_index = np.random.randint(0,X.shape[0],(num_plot,))  # batch size张图中随机选三张
+predicted = np.ones(num_plot)
+
+Xshape = X.shape
+yshape = y.shape
+
+batch_size = Xshape[0]          # 图的数量
+input_size = Xshape[2]          # 图大小（像素）
+in_ch_size = Xshape[1]          # 图的depth (grayscale or RGB)
+filter_width = 5                # filter size
+filter_height = filter_width
+num_filters = 25                # filter number
+class_num = 10
+
 # some para
-num_train = 50                      # 训练数
+num_train = 50                  # training times
 lr = 3.0
 cnv_lr = lr
-fcl_lr = lr                         # learning rate
-decay = 0.1
-break_threshold = 100000
-M = 256
+fcl_lr = lr                     # learning rate
+decay = 0.05
+break_threshold = 400000
+M = 128
 cnvRMS_r_W = 0
 fclRMS_r_W = 0
 alpha = 0.9
@@ -476,9 +492,10 @@ fcl_in_ch_size = num_filters
 fcl_num_filters = class_num
 
 # print parameter
-print('batch_size: %s, num_filters: %s' % (batch_size, num_filters))
-print('lr: %s, decay: %s, lr when 100th: %s, lr when 500th: %s' % (lr, decay, (lr/(1.0+decay*100.0)), (lr/(1.0+decay*500.0))))
-print('break_threshold: %s, SGD M: %s' % (break_threshold, M))
+if is_learning == True:
+    print('batch_size: %s, num_filters: %s' % (batch_size, num_filters))
+    print('lr: %s, decay: %s, lr when 100th: %s, lr when 500th: %s' % (lr, decay, (lr/(1.0+decay*100.0)), (lr/(1.0+decay*500.0))))
+    print('break_threshold: %s, SGD M: %s' % (break_threshold, M))
 
 # function declaration
 # create convolutional layer object
@@ -491,7 +508,7 @@ fcl = nn_convolutional_layer(fcl_filter_width, fcl_filter_height, fcl_input_size
 # softmax cross entropy
 smax_cent = smax_cent_layer()
 # softmax
-smax = nn_softmax_layer()   # 接收 10-by-1的column vector
+smax = nn_softmax_layer()     # 接收 10-by-1的column vector
 # cross entropy
 cent = nn_cross_entropy_layer()
 # loss
@@ -499,17 +516,16 @@ loss_out = np.zeros(num_train)
 
 # load para
 if load_para == True:
-    cnv_load = np.load("cnv_para_save.npy", allow_pickle = True)
-    fcl_load = np.load("fcl_para_save.npy", allow_pickle = True)
+    cnv_load = np.load("cnv_para.npy", allow_pickle = True)
+    fcl_load = np.load("fcl_para.npy", allow_pickle = True)
     cnv.set_weights(cnv_load[0], cnv_load[1])
     fcl.set_weights(fcl_load[0], fcl_load[1])
 
 if is_learning == True:
-    for ntrain in range(num_train): # 训练次数
-    #for ntrain in range(0):
+    for ntrain in range(num_train):
 
         # convolution layer
-        cnv_out = cnv.forward(X)    # (batch_size, num_filters, conv_out_size, conv_out_size)
+        cnv_out = cnv.forward(X)    # shape = (batch_size, num_filters, conv_out_size, conv_out_size)
         #print(cnv_out.shape)
 
         # max pool layer
@@ -565,15 +581,14 @@ if is_learning == True:
         cnv_lr = lr * 1.0 / (1.0+decay*ntrain)
         fcl_lr = cnv_lr
 
-    # save
-    np.save("cnv_para_save.npy", cnv.get_weights())
-    np.save("fcl_para_save.npy", fcl.get_weights())
+        # save
+        np.save("cnv_para_from_hw4.npy", cnv.get_weights())
+        np.save("fcl_para_from_hw4.npy", fcl.get_weights())
 
 # predict
-#sample_index = [104, 238, 446]
-
 batch_size = 1
 for i in range(num_plot):
+    #pred_cnv_in = X_train[sample_index[i]].reshape(1, in_ch_size, input_size, input_size)
     pred_cnv_in = X[sample_index[i]].reshape(1, in_ch_size, input_size, input_size)
     pred_cnv_out = cnv.forward(pred_cnv_in)
 
@@ -590,16 +605,14 @@ for i in range(num_plot):
 
 # plot the selected images
 for i in range(num_plot):
-    img = np.squeeze(X_train[sample_index[i]])  # 选中图片的重组和, img.shape = (1, 28, 28) --> (28, 28)
+    img = np.squeeze(X_train[sample_index[i]])      # 选中图片的重组和, img.shape = (1, 28, 28) --> (28, 28)
+    #img = np.squeeze(X[sample_index[i]])
     ax = plt.subplot('1'+str(num_plot)+str(i))
-    #print('1'+str(num_plot)+str(i))
     plt.imshow(img,cmap=plt.get_cmap('gray'))
     ######
     ## Q5. Complete the below function ax.set_title
     tt = predicted[i]
     #####
     ax.set_title(predicted[i])
-    #print(y_train[sample_index[i]])
 
-#print(predicted)
 plt.show()
