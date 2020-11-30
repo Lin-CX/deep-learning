@@ -72,8 +72,6 @@ alpha
     
  **下面是学习部分的代码介绍**  
 ```
-# convolution layer
-    
 # 首先将图片输入到卷积层 (convolution layer)
 cnv_out = cnv.forward(X）
 
@@ -88,7 +86,7 @@ fcl_out = fcl.forward(mpl_out)  # shape = (batch_size, in_ch_size(class_num), mp
 smax_in = fcl_out.reshape(batch_size, class_num).T
 smax_out = smax.forward(smax_in)    # shape = (class_num, batch_size)
 
-# 记录损失函数cent loss
+# 计算并记录损失函数cross-entropy loss
 loss_out[ntrain] = cent.forward(smax_out, y)
 
 # 开始计算梯度进行反向传播

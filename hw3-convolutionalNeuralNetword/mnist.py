@@ -605,8 +605,8 @@ for i in range(num_plot):
 
 # plot the selected images
 for i in range(num_plot):
-    img = np.squeeze(X_train[sample_index[i]])      # 选中图片的重组和, img.shape = (1, 28, 28) --> (28, 28)
-    #img = np.squeeze(X[sample_index[i]])
+    #img = np.squeeze(X_train[sample_index[i]])      # 选中图片的重组和, img.shape = (1, 28, 28) --> (28, 28)
+    img = np.squeeze(X[sample_index[i]])
     ax = plt.subplot('1'+str(num_plot)+str(i))
     plt.imshow(img,cmap=plt.get_cmap('gray'))
     ######
