@@ -41,6 +41,9 @@
 
     **下面是设定的各种参数**  
 
+<font color=#FF0000>注意！调整filter的size参数时请输入正确参数，否则会报错！</font>  
+如size为28x28的input遇到size为11x11, stride为2的卷积filter时会报错，因为尺寸相互不匹配。
+
 ```
 # 一些开关参数
 load_para           # True表示加载已有卷积核，False表示使用随机生成的卷积核
