@@ -30,8 +30,9 @@
     * mnist.py 负责图像识别的整个卷积神经网络模型构建（**主要内容在这**）。  
 
 * 关于mnist文件  
+    * 参数的查找请善用搜索功能
     * 同步上传了已经训练过的卷积层和全连接层的卷积核，如果想直接测试请按"load_para=True"和"is_learning=False"设置。  
-    * 如果想自己体验一次学习请按请按"load_para=False"和"is_learning=True"设置。  
+    * 如果想自己体验一次学习请按"load_para=False"和"is_learning=True"设置。  
     * 各个参数意义在下面有说明。  
     
 
