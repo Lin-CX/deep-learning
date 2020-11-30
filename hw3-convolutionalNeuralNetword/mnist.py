@@ -433,6 +433,7 @@ print('Test labels shape: ', y_test.shape)           # (10000,)
 # switch
 load_para = True
 is_learning = False
+is_save = True
 
 #X = np.concatenate((X_train, X_test), axis=0)
 #y = np.concatenate((y_train, y_test), axis=0)
@@ -581,9 +582,10 @@ if is_learning == True:
         cnv_lr = lr * 1.0 / (1.0+decay*ntrain)
         fcl_lr = cnv_lr
 
-        # save
-        np.save("cnv_para_from_hw4.npy", cnv.get_weights())
-        np.save("fcl_para_from_hw4.npy", fcl.get_weights())
+        if is_save == True:
+            # save
+            np.save("cnv_para_from_hw4.npy", cnv.get_weights())
+            np.save("fcl_para_from_hw4.npy", fcl.get_weights())
 
 # predict
 batch_size = 1

@@ -44,6 +44,7 @@
 # 一些开关参数
 load_para           # True表示加载已有卷积核，False表示使用随机生成的卷积核
 is_learning         # True表示学习，False表示只是测试图片
+is_save             # True表示保存学习完之后的卷积核，False表示不保存
 ```  
 
 ```
