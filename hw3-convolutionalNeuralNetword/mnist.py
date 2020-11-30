@@ -433,7 +433,7 @@ print('Test labels shape: ', y_test.shape)           # (10000,)
 # switch
 load_para = True
 is_learning = False
-is_save = True
+is_save = False
 
 #X = np.concatenate((X_train, X_test), axis=0)
 #y = np.concatenate((y_train, y_test), axis=0)
@@ -496,7 +496,7 @@ fcl_num_filters = class_num
 if is_learning == True:
     print('batch_size: %s, num_filters: %s' % (batch_size, num_filters))
     print('lr: %s, decay: %s, lr when 100th: %s, lr when 500th: %s' % (lr, decay, (lr/(1.0+decay*100.0)), (lr/(1.0+decay*500.0))))
-    print('break_threshold: %s, SGD M: %s' % (break_threshold, M))
+    print('break_threshold: %s, Mini-SGD M: %s' % (break_threshold, M))
 
 # function declaration
 # create convolutional layer object
