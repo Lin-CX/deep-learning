@@ -9,7 +9,7 @@ hw3也是数字图片识别，区别在于上一次是完全我作为初学者�
     <img src="./CNN-architecture.png" alt="CNN architecture" align=center />
 </div>  
 
-**Input**: (6+1)万张28x28x1的手写数字图片  
+**Input**: 5万张28x28x1的训练图片和1万张测试图片  
 <div  align="center">  
     <img src="./input_sample.png" alt="input image" align=center />
 </div>  
