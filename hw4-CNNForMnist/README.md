@@ -9,7 +9,7 @@ hw3也是数字图片识别，区别在于上一次是完全我作为初学者�
     <img src="./CNN-architecture.png" alt="CNN architecture" align=center />
 </div>  
 
-**Input**: 7万张28x28x1像素图片（六万张训练，一万张测试）  
+**Input**: 7万张28x28x1像素图片（六万张训练，一万张测试，6万训练集中有一万分出来做验证集）  
 <div  align="center">  
     <img src="./input_sample.png" alt="input image" align=center />
 </div>  
@@ -23,4 +23,13 @@ hw3也是数字图片识别，区别在于上一次是完全我作为初学者�
 </div>  
 
 **Output:**  
-未完待续 太困了
+上面的**batch accuracy**是对test集预测的准确度，**total accuracy**是对test集的总准确度。  
+下面的十张图片是随机抽取十张进行测试，上面有label和predict结果，正确则黑色字体，错误则红色字体（图中全对所以都是黑色）：  
+<div  align="center">  
+    <img src="./result.png" alt="result" align=center />
+</div>  
+
+**总花费时间**，单位：分钟  
+<div  align="center">  
+    <img src="./running_time.png" alt="running time" align=center />
+</div>  
