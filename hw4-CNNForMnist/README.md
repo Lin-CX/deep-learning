@@ -9,7 +9,8 @@ hw3也是数字图片识别，区别在于上一次是完全我作为初学者�
     <img src="./CNN-architecture.png" alt="CNN architecture" align=center />
 </div>  
 
-### Input: 7万张28x28x1像素图片（六万张训练(train)，一万张测试(test)，6万训练集中有一万分出来做验证集(validation)）  
+### Input:
+* 7万张28x28x1像素图片（五万张训练(train)，一万张验证(validation)，一万张测试(test)）  
 <div  align="center">  
     <img src="./input_sample.png" alt="input image" align=center />
 </div>  
