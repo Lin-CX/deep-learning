@@ -19,7 +19,7 @@ hw3也是数字图片识别，区别在于上一次是完全我作为初学者�
 * 验证准确度(validation accuracy)指当前模型对从训练集以外随机抽取的一批数据集的准确度。  
 
 <div  align="center">  
-    <img src="./运行时截图1.png" alt="运行时截图1" align=center width="450" height="450" />
+    <img src="./运行时截图1.png" alt="运行时截图1" align=center style="zoom:50%" />
 </div>  
 
 **Output:**  
