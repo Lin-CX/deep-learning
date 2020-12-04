@@ -14,7 +14,7 @@ hw3也是数字图片识别，区别在于上一次是完全我作为初学者�
     <img src="./input_sample.png" alt="input image" align=center />
 </div>  
 
-**运行时**: 每50次update打印一次loss，每200次update**训练准确度**和**验证准确度**。  
+**运行时**: 每**50**次update打印一次loss，每**200**次update**训练准确度**和**验证准确度**。  
 * 训练准确度(training accuracy)指当前模型对接下来一批(batch)输入的准确度。  
 * 验证准确度(validation accuracy)指当前模型对从训练集以外随机抽取的一批数据集的准确度。  
 
