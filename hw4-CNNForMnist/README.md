@@ -3,15 +3,23 @@
 hw3也是数字图片识别，区别在于上一次是完全我作为初学者自己写得神经网络。  
 这次是教授给的框架，我只用把forward和backprop函数和momentum算法写好就行了。所以这次的模型速度又快准确率又高。  
 
-## 运行截图  
+## 一些截图  
 **CNN architecture**  
 <div  align="center">    
     <img src="./CNN-architecture.png" alt="CNN architecture" align=center />
 </div>  
 
-**Input**: 5万张28x28x1的训练图片和1万张测试图片  
+**Input**: 7万张28x28x1像素图片  
 <div  align="center">  
     <img src="./input_sample.png" alt="input image" align=center />
+</div>  
+
+**运行时**: 每50次update打印一次loss，每200次update**训练准确度**和**验证准确度**。  
+* 训练准确度(training accuracy)指当前模型对接下来一批(batch)输入的准确度。  
+* 验证准确度(validation accuracy)指当前模型对从训练集以外随机抽取的一批数据集的准确度。  
+
+<div  align="center">  
+    <img src="./运行时截图1.png" alt="运行时截图1" align=center />
 </div>  
 
 **Output:**  
