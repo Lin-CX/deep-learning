@@ -28,13 +28,13 @@ hw3也是数字图片识别，区别在于上一次是完全我作为初学者�
 * 上面部分的**batch accuracy**是对测试集预测的准确度，因为是分批次测试，所以每批次测试结束后打印一次当前批次的准确度  
 * 所有的测试结束之后会打印**total accuracy**，即模型对测试集的总准确度。  
 * 下面的十张图片是随机抽取十张进行测试，上面有label和predict结果，正确则黑色字体，错误则红色字体（图中全对所以都是黑色）：  
-<div  align="center">  
+<kbd><div  align="center">  
     <img src="./result.png" alt="result" align=center />
-</div>  
+</div></kbd>  
   
-<div  align="center">  
+<kbd><div  align="center">  
     <img src="./result2.png" alt="result" align=center />
-</div>  
+</div></kbd>  
 
 ### 总花费时间（单位：分钟）  
 <div  align="center">  
