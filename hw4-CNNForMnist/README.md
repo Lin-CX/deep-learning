@@ -31,7 +31,6 @@ hw3也是数字图片识别，区别在于上一次是完全我作为初学者�
 <kbd><div  align="center">  
     <img src="./result.png" alt="result" align=center />
 </div></kbd>  
-  
 <kbd><div  align="center">  
     <img src="./result2.png" alt="result" align=center />
 </div></kbd>  
