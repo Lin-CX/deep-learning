@@ -23,5 +23,5 @@
 
 * 以及这门课的评价
 <div  align="center"><kbd>  
-    <img src="./image.png" alt="grade" align=center />
+    <img src="./image.jpg" alt="grade" align=center />
 </kbd></div>  
