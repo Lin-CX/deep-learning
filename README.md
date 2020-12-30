@@ -14,3 +14,9 @@
 	* hw3是我自己写得CNN模型，框架很简单，没有激活函数(activation function)，也没有设置**训练准确度**和**验证准确度**，只是简单粗暴地把训练集放进去训练。  
 	* hw4的architecture是教授给的，学生只需要给出每个layers的**forward**和**backprop**函数，以及update的时候使用**momentum**算法就好了。教授的模型学得快准确率也高
 	* 虽然hw3出了乌龙，但是通过完全自己设计和实现CNN的过程对CNN更了解了，写hw4的时候得心应手。
+
+# 分数
+* 第一个作业因为不涉及深度学习的内容所以没有上传，所以是program2~6的成绩作为参考  
+<div  align="center"><kbd>  
+    <img src="./grade.png" alt="grade" align=center />
+</kbd></div>  
