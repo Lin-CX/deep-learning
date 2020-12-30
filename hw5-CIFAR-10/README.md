@@ -8,26 +8,26 @@
 ## 一些截图
 * 网络的总体结构，input先经过3x3 conv层，再经过四个stages，最后avg pooling后通过full connection得到结果。  
 <div  align="center"><kbd>    
-    <img src="./netword_archi.png" alt="netword architecture" align=center style="zoom:40%" />
-</kbd></div>  
+    <img src="./netword_archi.png" alt="netword architecture" align=center width="40%" height="40%" />
+</kbd></div><br>  
   
   
 * stage 1的图示如下:  
 <div  align="center"><kbd>    
-    <img src="./stage1.png" alt="stage architecture" align=center style="zoom:50%" />
-</kbd></div>  
+    <img src="./stage1.png" alt="stage architecture" align=center width="50%" height="50%" />
+</kbd></div><br>  
   
   
 * stage 2:  
 <div  align="center"><kbd>    
-    <img src="./stage2.png" alt="stage architecture" align=center style="zoom:50%" />
-</kbd></div>  
+    <img src="./stage2.png" alt="stage architecture" align=center width="50%" height="50%" />
+</kbd></div><br>  
   
   
 * stage 3和stage 4:
 <div  align="center"><kbd>    
-    <img src="./stage3&4.png" alt="stage architecture" align=center style="zoom:50%" />
-</kbd></div>  
+    <img src="./stage3&4.png" alt="stage architecture" align=center width="50%" height="50%" />
+</kbd></div><br>  
   
 
 * 运行时:  
@@ -37,13 +37,13 @@
         * elapsed: ...  sec  
         [epoch, mini-batches] loss: ...
 <div  align="center"><kbd>    
-    <img src="./runing.png" alt="runing" align=center style="zoom:50%" />
-</kbd></div>  
+    <img src="./runing.png" alt="runing" align=center width="50%" height="50%" />
+</kbd></div><br>  
 
 * 运行结果(每个stage只有2个block时的结果，经实测调整block数可以增加准确度)  
 <div  align="center"><kbd>    
-    <img src="./result.png" alt="result architecture" align=center style="zoom:50%" />
-</kbd></div>  
+    <img src="./result.png" alt="result architecture" align=center width="50%" height="50%" />
+</kbd></div><br>  
   
 ## 如何修改block数  
 由于只是作业所以每个stage只有两个block:  
