@@ -8,24 +8,28 @@
 ## 一些截图
 * 网络的总体结构，input先经过3x3 conv层，再经过四个stages，最后avg pooling后通过full connection得到结果。  
 <div  align="center"><kbd>    
-    <img src="./netword_archi.png" alt="netword architecture" align=center />
+    <img src="./netword_archi.png" alt="netword architecture" align=center style="zoom:40%" />
 </kbd></div>  
+  
   
 * stage 1的图示如下:  
 <div  align="center"><kbd>    
-    <img src="./stage1.png" alt="stage architecture" align=center />
-</kbd></div>  
-
-* stage 2:  
-<div  align="center"><kbd>    
-    <img src="./stage2.png" alt="stage architecture" align=center />
-</kbd></div>  
-
-* stage 3和stage 4:
-<div  align="center"><kbd>    
-    <img src="./stage3&4.png" alt="stage architecture" align=center />
+    <img src="./stage1.png" alt="stage architecture" align=center style="zoom:50%" />
 </kbd></div>  
   
+  
+* stage 2:  
+<div  align="center"><kbd>    
+    <img src="./stage2.png" alt="stage architecture" align=center style="zoom:50%" />
+</kbd></div>  
+  
+  
+* stage 3和stage 4:
+<div  align="center"><kbd>    
+    <img src="./stage3&4.png" alt="stage architecture" align=center style="zoom:50%" />
+</kbd></div>  
+  
+
 * 运行时:  
     * 首先检测能否使用GPU加速，如果不能则自动使用CPU，然后打印当前设备。
     * 下载学习资料
@@ -33,12 +37,12 @@
         * elapsed: ...  sec  
         [epoch, mini-batches] loss: ...
 <div  align="center"><kbd>    
-    <img src="./runing.png" alt="runing" align=center />
+    <img src="./runing.png" alt="runing" align=center style="zoom:50%" />
 </kbd></div>  
 
 * 运行结果(每个stage只有2个block时的结果，经实测调整block数可以增加准确度)  
 <div  align="center"><kbd>    
-    <img src="./result.png" alt="result architecture" align=center />
+    <img src="./result.png" alt="result architecture" align=center style="zoom:50%" />
 </kbd></div>  
   
 ## 如何修改block数  
