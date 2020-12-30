@@ -16,7 +16,12 @@
 	* 虽然hw3出了乌龙，但是通过完全自己设计和实现CNN的过程对CNN更了解了，写hw4的时候得心应手。
 
 # 分数
-* 第一个作业因为不涉及深度学习的内容所以没有上传，所以是program2~6的成绩作为参考  
+* 第一个作业因为不涉及深度学习的内容所以没有上传，所以是program2~6的成绩对应hw1~5的  
 <div  align="center"><kbd>  
     <img src="./grade.png" alt="grade" align=center />
+</kbd></div>  
+
+* 以及这门课的评价
+<div  align="center"><kbd>  
+    <img src="./image.png" alt="grade" align=center />
 </kbd></div>  
