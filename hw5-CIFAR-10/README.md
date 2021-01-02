@@ -5,7 +5,7 @@
 
 接下来对本神经网络进行简单的说明，如果想详细了解如每个stage和block的构造可以参考PA1.pdf文件
 
-## 一些截图
+## Some Screenshots
 * 网络的总体结构，input先经过3x3 conv层，再经过四个stages，最后avg pooling后通过full connection得到结果。  
 <div  align="center"><kbd>    
     <img src="./netword_archi.png" alt="netword architecture" align=center width="60%" />
@@ -45,7 +45,7 @@
     <img src="./result.png" alt="result architecture" align=center width="70%" />
 </kbd></div><br>  
   
-## 如何修改block数  
+## How to modify the number of block  
 由于只是作业所以每个stage只有两个block:  
 ```
 # define network
