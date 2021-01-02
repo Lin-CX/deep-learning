@@ -6,13 +6,13 @@
 接下来对本神经网络进行简单的说明，如果想详细了解如每个stage和block的构造可以参考PA1.pdf文件
 
 ## Some Screenshots
-* Structure of entry network，input先经过3x3 conv层，再经过四个stages，最后avg pooling后通过full connection得到结果。  
+* Architecture of entry network，input先经过3x3 conv层，再经过四个stages，最后avg pooling后通过full connection得到结果。  
 <div  align="center"><kbd>    
     <img src="./netword_archi.png" alt="netword architecture" align=center width="60%" />
 </kbd></div><br>  
   
   
-* Stage 1 structure:  
+* Stage 1 architecture:  
 <div  align="center"><kbd>    
     <img src="./stage1.png" alt="stage architecture" align=center width="70%" />
 </kbd></div><br>  
@@ -24,7 +24,7 @@
 </kbd></div><br>  
   
   
-* Stage 3和stage 4:
+* Stage 3 and stage 4:
 <div  align="center"><kbd>    
     <img src="./stage3&4.png" alt="stage architecture" align=center width="70%" />
 </kbd></div><br>  
