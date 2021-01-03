@@ -6,7 +6,8 @@
 接下来对本神经网络进行简单的说明，如果想详细了解如每个stage和block的构造可以参考PA1.pdf文件
 
 ## Some Screenshots
-* Architecture of entry network，input先经过3x3 conv层，再经过四个stages，最后avg pooling后通过full connection得到结果。  
+### Architecture of entry network
+* input先经过3x3 conv层，再经过四个stages，最后avg pooling后通过full connection得到结果。  
 <div  align="center"><kbd>    
     <img src="./netword_archi.png" alt="netword architecture" align=center width="60%" />
 </kbd></div><br>  
@@ -30,7 +31,7 @@
 </kbd></div><br>  
   
 
-* Running:  
+### Running:  
     * 首先检测能否使用GPU加速，如果不能则自动使用CPU，然后打印当前设备。
     * 下载学习资料
     * 每2000个mini-batches输出一次信息，格式如下。内容有花费时间，当前epoch, batch数，loss
@@ -40,7 +41,7 @@
     <img src="./runing.png" alt="runing" align=center width="70%" />
 </kbd></div><br>  
 
-* Result (每个stage只有2个block时的结果，经实测调整block数可以增加准确度)  
+### Result (每个stage只有2个block时的结果，经实测调整block数可以增加准确度)  
 <div  align="center"><kbd>    
     <img src="./result.png" alt="result architecture" align=center width="70%" />
 </kbd></div><br>  
