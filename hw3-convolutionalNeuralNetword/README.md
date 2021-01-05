@@ -1,29 +1,38 @@
-# hw3 introduction
+# 📕 hw3 introduction
 这是主要基于python的numpy实现的卷积神经网络(convolutional neural network)，具体内容可查看作业说明PDF和代码文件~  
 
 本卷积神经网络基于 [Mini-SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) + [1/t decay](https://www.jianshu.com/p/d8222a84613c) + [RMSProp](https://zhuanlan.zhihu.com/p/79981927) 实现。  
 简单修改代码也可以变成没有RMSProp和1/t dcay的DG  
 
-关于CNN的说明可以参考[这篇文章](https://medium.com/@pkqiang49/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-cnn-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86-%E7%8B%AC%E7%89%B9%E4%BB%B7%E5%80%BC-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8-6047fb2add35)。讲的很好很有意思也没有涉及太多拗口难懂的知识。  
+关于CNN的说明可以参考[这篇文章](https://medium.com/@pkqiang49/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-cnn-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86-%E7%8B%AC%E7%89%B9%E4%BB%B7%E5%80%BC-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8-6047fb2add35)。讲的很好很有意思也没有涉及太多拗口难懂的知识。 
+
+## Hwo to run
+
+1. Install the [requirement](https://raw.githubusercontent.com/Lin-CX/deep-learning/main/requirements_dl.txt) packages of this project.
+2. git clone https://github.com/Lin-CX/deep-learning/tree/main/hw3-convolutionalNeuralNetword
+
+3. python3 mnist.py
+
+ 
 
 
 ## 运行截图  
-**运行时的样子**
+🎈 **运行时的样子**
 <div  align="center">    
     <img src="./运行时的样子.png" align=center />
 </div> 
+**🎈 Input**: (6+1)万张28x28x1的手写数字图片
 
-**Input**: (6+1)万张28x28x1的手写数字图片
 <div  align="center">    
     <img src="./input_ex.png" alt="input image" align=center />
 </div>  
+**🎈 output**: 随机选择的num_plot张带着label的输出
 
-**output**: 随机选择的num_plot张带着label的输出
 <div  align="center">    
     <img src="./output_ex.png" alt="output image" align=center />
 </div>
 
-# 项目说明
+# 📖 项目说明
 首先感谢一个朋友，自己的电脑太烂所以用他的电脑帮我跑，帮了很大的忙。 感谢🦀🦀。  
 本卷积神经网络基于 [Mini-SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) + [1/t decay](https://www.jianshu.com/p/d8222a84613c) + [RMSProp](https://zhuanlan.zhihu.com/p/79981927) 实现  
 * 总共有两个py文件：nn.py和mnist.py   
@@ -36,7 +45,6 @@
     * 如果想自己体验一次学习请按"load_para=False"和"is_learning=True"设置。(不过会花费很多很多时间以及占用很大内存)
     * 各个参数意义在下面有说明。  
     
-
 * 模型运行的流程  
 
     **下面是设定的各种参数**  
@@ -49,7 +57,7 @@
 load_para           # True表示加载已有卷积核，False表示使用随机生成的卷积核
 is_learning         # True表示学习，False表示只是测试图片
 is_save             # True表示保存学习完之后的卷积核，False表示不保存
-```  
+```
 
 ```
 # 模型的参数
@@ -73,8 +81,8 @@ M                   # Mini-SGD的参数
 cnvRMS_r_W = 0      # RMSProp的参数
 fclRMS_r_W = 0
 alpha
-```  
-    
+```
+
  **下面是学习部分的代码介绍**  
 ```
 # 首先将图片输入到卷积层 (convolution layer)
@@ -143,7 +151,7 @@ cnv_lr = lr * 1.0 / (1.0+decay*ntrain)
 fcl_lr = cnv_lr
     
 # 学习结束，进行下一次的学习。
-```  
+```
 
 
 **下面是预测的过程**  
@@ -171,12 +179,12 @@ for i in range(num_plot):
 
     # 将预测结果保存到predicted中
     predicted[i] = np.argmax(pred_smax_out)
-```  
+```
 
 最后的话将结果通过plt输出得到上述的output中的样子。
 
 
-## nn.py  
+## 📖 nn.py  
 里面有nn_convolutional_layer和nn_max_pooling_layer两个classes，分别负责convolution和maxpool操作。  
 每个class里主要有两个函数：forward和backward，forward负责执行操作，backward负责计算梯度。  
 剩余的主体代码主要是生成数据来测试上面的两个classes是否能正常使用，以及调整各种数据后(ex: input_size, batch_size, filter_size等)代码是否依旧能运行等。  
@@ -186,9 +194,9 @@ for i in range(num_plot):
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/nnResult1.png)  
 #### batch_size设置为32时(由于处理数据变多所以运行时间也变多了)  
 ![image](https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/nnResult2.png)
-  
-  
-## mnist.py  
+
+
+## 📖 mnist.py  
 
 #### 过程日记
 
@@ -198,7 +206,7 @@ for i in range(num_plot):
 如有4个filter，池化层结束后的大小是6-by-6，所以reshape(4×6×6)，然后再乘W得到10个labels的值。  
 loss是用softmax + cross-entropy来计算的，目前问题是loss优化到一定数值后就一直在这个数字波动了。  
 由于教授只讲了convolution layer和pools layer。后面的操作先看看别人的思路再进行。姑且先上传保存下进度吧。  
-  
+
 ##### Nov 25, 2020
 把forward和backprop的过程修改了一点，目前可以认图了。  
 但是电脑配置太差，只测试了学习50，100， 500，1000，5000张图的情况，均可以正常识别出图中的数字。  
