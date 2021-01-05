@@ -10,9 +10,9 @@
 ## 💨 Hwo To Run
 
 1. Install the [requirement](https://raw.githubusercontent.com/Lin-CX/deep-learning/main/requirements_dl.txt) packages of this project.
-2. git clone https://github.com/Lin-CX/deep-learning/tree/main/hw5-CIFAR-10
+2. `git clone https://github.com/Lin-CX/deep-learning/tree/main/hw5-CIFAR-10`
 
-3. python3 CIFAR-10.py
+3. `python3 CIFAR-10.py`
 
 
 

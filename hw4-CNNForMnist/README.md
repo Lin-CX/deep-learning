@@ -8,8 +8,8 @@ hw3也是数字图片识别，区别在于上一次是完全我作为初学者�
 ## 💨 Hwo to run
 
 1. Install the [requirement](https://raw.githubusercontent.com/Lin-CX/deep-learning/main/requirements_dl.txt) packages of this project.
-2. git clone https://github.com/Lin-CX/deep-learning/tree/main/hw4-CNNForMnist
-3. python3 hw5.py
+2. `git clone https://github.com/Lin-CX/deep-learning/tree/main/hw4-CNNForMnist`
+3. `python3 hw5.py`
 
 
 

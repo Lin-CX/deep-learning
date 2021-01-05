@@ -9,9 +9,9 @@
 ## Hwo to run
 
 1. Install the [requirement](https://raw.githubusercontent.com/Lin-CX/deep-learning/main/requirements_dl.txt) packages of this project.
-2. git clone https://github.com/Lin-CX/deep-learning/tree/main/hw3-convolutionalNeuralNetword
+2. `git clone https://github.com/Lin-CX/deep-learning/tree/main/hw3-convolutionalNeuralNetword`
 
-3. python3 mnist.py
+3. `python3 mnist.py`
 
  
 
