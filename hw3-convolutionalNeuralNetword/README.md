@@ -1,8 +1,8 @@
 # 📕 hw3 introduction
-这是主要基于python的numpy实现的卷积神经网络(convolutional neural network)，具体内容可查看作业说明PDF和代码文件~  
+这是主要基于python的numpy实现的卷积神经网络(convolutional neural network)，具体内容可查看作业说明PDF和代码文件~
 
-本卷积神经网络基于 [Mini-SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) + [1/t decay](https://www.jianshu.com/p/d8222a84613c) + [RMSProp](https://zhuanlan.zhihu.com/p/79981927) 实现。  
-简单修改代码也可以变成没有RMSProp和1/t dcay的DG  
+本卷积神经网络基于 [Mini-SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) + [1/t decay](https://www.jianshu.com/p/d8222a84613c) + [RMSProp](https://zhuanlan.zhihu.com/p/79981927) 实现。
+简单修改代码也可以变成没有RMSProp和1/t dcay的DG
 
 关于CNN的说明可以参考[这篇文章](https://medium.com/@pkqiang49/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-cnn-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86-%E7%8B%AC%E7%89%B9%E4%BB%B7%E5%80%BC-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8-6047fb2add35)。讲的很好很有意思也没有涉及太多拗口难懂的知识。 
 
@@ -16,16 +16,18 @@
  
 
 
-## 运行截图  
+## 运行截图
 🎈 **运行时的样子**
 <div  align="center">    
     <img src="./运行时的样子.png" align=center />
-</div> 
+</div>
+
 **🎈 Input**: (6+1)万张28x28x1的手写数字图片
 
 <div  align="center">    
     <img src="./input_ex.png" alt="input image" align=center />
-</div>  
+</div>
+
 **🎈 output**: 随机选择的num_plot张带着label的输出
 
 <div  align="center">    
@@ -33,33 +35,34 @@
 </div>
 
 # 📖 项目说明
-首先感谢一个朋友，自己的电脑太烂所以用他的电脑帮我跑，帮了很大的忙。 感谢🦀🦀。  
+首先感谢一个朋友，自己的电脑太烂所以用他的电脑帮我跑，帮了很大的忙。 感谢🦀🦀。
 本卷积神经网络基于 [Mini-SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) + [1/t decay](https://www.jianshu.com/p/d8222a84613c) + [RMSProp](https://zhuanlan.zhihu.com/p/79981927) 实现  
-* 总共有两个py文件：nn.py和mnist.py   
-    * nn.py 负责实现convolutional_layer和max_pooling_layer两个layers的正确与否测试。  
-    * mnist.py 负责图像识别的整个卷积神经网络模型构建（**主要内容在这**）。  
 
-* 关于mnist文件  
+* 总共有两个py文件：nn.py和mnist.py
+    * nn.py 负责实现convolutional_layer和max_pooling_layer两个layers的正确与否测试。  
+    * mnist.py 负责图像识别的整个卷积神经网络模型构建（**主要内容在这**）。
+
+* 关于mnist文件
     * 参数的查找请善用搜索功能
-    * 同步上传了已经训练过的卷积层和全连接层的卷积核，如果想直接测试请按"load_para=True"和"is_learning=False"设置。  
+    * 同步上传了已经训练过的卷积层和全连接层的卷积核，如果想直接测试请按"load_para=True"和"is_learning=False"设置。
     * 如果想自己体验一次学习请按"load_para=False"和"is_learning=True"设置。(不过会花费很多很多时间以及占用很大内存)
-    * 各个参数意义在下面有说明。  
+    * 各个参数意义在下面有说明。
     
-* 模型运行的流程  
+* 模型运行的流程
 
     **下面是设定的各种参数**  
 
-**注意！调整filter的size参数时请输入正确参数，否则会报错！**  
+**注意！调整filter的size参数时请输入正确参数，否则会报错！**
 如size为28x28的input遇到size为11x11, stride为2的卷积filter时会报错，因为尺寸相互不匹配。
 
-```
+```python
 # 一些开关参数
 load_para           # True表示加载已有卷积核，False表示使用随机生成的卷积核
 is_learning         # True表示学习，False表示只是测试图片
 is_save             # True表示保存学习完之后的卷积核，False表示不保存
 ```
 
-```
+```python
 # 模型的参数
 num_plot            # 想测试的图片数量
 sample_index        # batch_size张图中随机选num_plot张
@@ -84,7 +87,7 @@ alpha
 ```
 
  **下面是学习部分的代码介绍**  
-```
+```python
 # 首先将图片输入到卷积层 (convolution layer)
 cnv_out = cnv.forward(X）
 
@@ -156,7 +159,7 @@ fcl_lr = cnv_lr
 
 **下面是预测的过程**  
 
-```
+```python
 # 因为每次只预测一张图所以把batch_size设置成1
 batch_size = 1
 # 对num_plot张图进行预测
@@ -184,38 +187,38 @@ for i in range(num_plot):
 最后的话将结果通过plt输出得到上述的output中的样子。
 
 
-## 📖 nn.py  
-里面有nn_convolutional_layer和nn_max_pooling_layer两个classes，分别负责convolution和maxpool操作。  
-每个class里主要有两个函数：forward和backward，forward负责执行操作，backward负责计算梯度。  
-剩余的主体代码主要是生成数据来测试上面的两个classes是否能正常使用，以及调整各种数据后(ex: input_size, batch_size, filter_size等)代码是否依旧能运行等。  
+## 📖 nn.py
+里面有nn_convolutional_layer和nn_max_pooling_layer两个classes，分别负责convolution和maxpool操作。
+每个class里主要有两个函数：forward和backward，forward负责执行操作，backward负责计算梯度。
+剩余的主体代码主要是生成数据来测试上面的两个classes是否能正常使用，以及调整各种数据后(ex: input_size, batch_size, filter_size等)代码是否依旧能运行等。
 
-### nn.py的运行结果  
-#### batch_size设置为8时  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/nnResult1.png)  
-#### batch_size设置为32时(由于处理数据变多所以运行时间也变多了)  
-![image](https://github.com/Lin-CX/deep-learning/blob/main/hw3-convolutionalNeuralNetword/nnResult2.png)
+### nn.py的运行结果
+#### batch_size设置为8时
+![image](./nnResult1.png)  
+#### batch_size设置为32时(由于处理数据变多所以运行时间也变多了)
+![image](./nnResult2.png)
 
 
-## 📖 mnist.py  
+## 📖 mnist.py
 
 #### 过程日记
 
-##### Nov 24, 2020  
-各个连接层可以连接，正常调整参数(input_size, filter_num, pool_size等)。  
+##### Nov 24, 2020
+各个连接层可以连接，正常调整参数(input_size, filter_num, pool_size等)。
 但是对于池化层到全连接层的过度有点不是很明白，目前是池化层结束后再将其以一维reshape。
-如有4个filter，池化层结束后的大小是6-by-6，所以reshape(4×6×6)，然后再乘W得到10个labels的值。  
-loss是用softmax + cross-entropy来计算的，目前问题是loss优化到一定数值后就一直在这个数字波动了。  
+如有4个filter，池化层结束后的大小是6-by-6，所以reshape(4×6×6)，然后再乘W得到10个labels的值。
+loss是用softmax + cross-entropy来计算的，目前问题是loss优化到一定数值后就一直在这个数字波动了。
 由于教授只讲了convolution layer和pools layer。后面的操作先看看别人的思路再进行。姑且先上传保存下进度吧。  
 
 ##### Nov 25, 2020
-把forward和backprop的过程修改了一点，目前可以认图了。  
-但是电脑配置太差，只测试了学习50，100， 500，1000，5000张图的情况，均可以正常识别出图中的数字。  
+把forward和backprop的过程修改了一点，目前可以认图了。
+但是电脑配置太差，只测试了学习50，100， 500，1000，5000张图的情况，均可以正常识别出图中的数字。
 学习的图片再多的话如10000张图没试过了跑了一天都没跑完。。。但是总共有6万张图，绝望。
 
 ##### Nov 27, 2020
-昨晚把代码优化了，之前用的是GD，目前版本是基于mini-SGD + RMSProp + 1/t decay实现，  
+昨晚把代码优化了，之前用的是GD，目前版本是基于mini-SGD + RMSProp + 1/t decay实现，
 速度大大加快一晚上就学完60000张学习资料并保存了卷积核。
-现在已经可以拿来用了，学习时间有限+防止overfitting，  
-目前把loss调整到三次的和低于500000就退出，所以正确率不是100%但是除了比较像的图片一般都能对了。  
-后续还在优化中，不过差不多能提交了。  
+现在已经可以拿来用了，学习时间有限+防止overfitting，
+目前把loss调整到三次的和低于500000就退出，所以正确率不是100%但是除了比较像的图片一般都能对了。 
+后续还在优化中，不过差不多能提交了。
 谁能想到20分的项目作业梯度函数和建立模型17分，只占3分的正确识别图片却花了80%的时间和精力。😓
