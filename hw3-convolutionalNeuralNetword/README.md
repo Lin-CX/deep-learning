@@ -6,7 +6,7 @@
 
 关于CNN的说明可以参考[这篇文章](https://medium.com/@pkqiang49/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-cnn-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86-%E7%8B%AC%E7%89%B9%E4%BB%B7%E5%80%BC-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8-6047fb2add35)。讲的很好很有意思也没有涉及太多拗口难懂的知识。 
 
-## Hwo to run
+## How to run
 
 1. Install the [requirement](https://raw.githubusercontent.com/Lin-CX/deep-learning/main/requirements_dl.txt) packages of this project.
 2. `git clone https://github.com/Lin-CX/deep-learning/tree/main/hw3-convolutionalNeuralNetword`
@@ -16,8 +16,8 @@
  
 
 
-## 运行截图
-🎈 **运行时的样子**
+## Some Screenshots
+🎈 **Running**
 <div  align="center">    
     <img src="./运行时的样子.png" align=center />
 </div>
@@ -28,7 +28,7 @@
     <img src="./input_ex.png" alt="input image" align=center />
 </div>
 
-**🎈 output**: 随机选择的num_plot张带着label的输出
+**🎈 Output**: 随机选择的num_plot张带着label的输出
 
 <div  align="center">    
     <img src="./output_ex.png" alt="output image" align=center />
