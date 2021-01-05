@@ -62,7 +62,7 @@ is_learning         # True表示学习，False表示只是测试图片
 is_save             # True表示保存学习完之后的卷积核，False表示不保存
 ```
 
-```python
+```
 # 模型的参数
 num_plot            # 想测试的图片数量
 sample_index        # batch_size张图中随机选num_plot张
