@@ -80,7 +80,7 @@ net = IdentityResNet(nblk_stage1=2, nblk_stage2=2,
 
   
 
-  ![result2](/home/lincx/mydoc/code/python/deep-learning/hw5-CIFAR-10/result2.png)
+  ![result2](./result2.png)
 
 
 
