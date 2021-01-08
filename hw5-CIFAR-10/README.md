@@ -59,14 +59,32 @@
     <img src="./result.png" alt="result architecture" align=center width="70%" />
 </kbd></div><br>  
 
-## 🎈 How to modify the number of block  
+## 🎈 How to modify the number of block
 由于只是作业所以每个stage只有两个block:  
-```
+```python
 # define network
 net = IdentityResNet(nblk_stage1=2, nblk_stage2=2,
                      nblk_stage3=2, nblk_stage4=2)
 ```
 如果想调整block数以提高准确度在上方代码中修改数字即可
+
+
+
+* Result of changed the block of netword as below, accuracy increased 4%
+
+  ```python
+  # define network
+  net = IdentityResNet(nblk_stage1=3, nblk_stage2=4,
+                       nblk_stage3=6, nblk_stage4=3)
+  ```
+
+  
+
+  ![result2](/home/lincx/mydoc/code/python/deep-learning/hw5-CIFAR-10/result2.png)
+
+
+
+
 
 ## 🎈 最后说下感想
 用pytorch写网络真的比用numpy快而且简单多了，当用30行代码完成之前500行用numpy完成的网络时突然觉得空虚。  
