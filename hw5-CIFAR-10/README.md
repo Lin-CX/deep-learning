@@ -84,6 +84,10 @@ net = IdentityResNet(nblk_stage1=2, nblk_stage2=2,
 
 
 
+* 本来想要继续调整参数提高准确率，但是电脑太慢了就到此为止吧。
+
+  I wanted to continue to adjust the parameters to improve the accuracy, but my computer is too slow. Let's stop here.
+
 
 
 ## 🎈 最后说下感想
