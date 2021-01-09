@@ -74,7 +74,7 @@ net = IdentityResNet(nblk_stage1=2, nblk_stage2=2,
 ```python
 # using RandomHorizontalFlip and RandomCrop function to data augmentation
 transform = transforms.Compose([transforms.RandomHorizontalFlip(),
-								transforms.RandomCrop(28),
+                                transforms.RandomCrop(28),
                                 transforms.ToTensor(),
                                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
