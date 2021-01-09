@@ -70,16 +70,20 @@ net = IdentityResNet(nblk_stage1=2, nblk_stage2=2,
 
 
 
-* Result of changed the block of netword as below, accuracy increased 4%
+* Result of changed the block of netword and data augmentation as below, accuracy increased 4%
 
   ```python
-  # define network
+  # using RandomHorizontalFlip function to data augmentation
+  transform = transforms.Compose([transforms.RandomHorizontalFlip(),
+                                  transforms.ToTensor(),
+                                  transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+# define network
   net = IdentityResNet(nblk_stage1=3, nblk_stage2=4,
-                       nblk_stage3=6, nblk_stage4=3)
+                     nblk_stage3=6, nblk_stage4=3)
   ```
-
   
-
+  
+  
   ![result2](./result2.png)
 
 
