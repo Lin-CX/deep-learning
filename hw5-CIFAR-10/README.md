@@ -68,29 +68,25 @@ net = IdentityResNet(nblk_stage1=2, nblk_stage2=2,
 ```
 如果想调整block数以提高准确度在上方代码中修改数字即可
 
+* Result of changed the block of netword and data augmentation as below, accuracy increased 5%
 
 
-* Result of changed the block of netword and data augmentation as below, accuracy increased 4%
+```python
+# using RandomHorizontalFlip function to data augmentation
+transform = transforms.Compose([transforms.RandomHorizontalFlip(),
+                                transforms.ToTensor(),
+                                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-  ```python
-  # using RandomHorizontalFlip function to data augmentation
-  transform = transforms.Compose([transforms.RandomHorizontalFlip(),
-                                  transforms.ToTensor(),
-                                  transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 # define network
-  net = IdentityResNet(nblk_stage1=3, nblk_stage2=4,
+net = IdentityResNet(nblk_stage1=3, nblk_stage2=4,
                      nblk_stage3=6, nblk_stage4=3)
-  ```
-  
-  
-  
-  ![result2](./result2.png)
+```
 
-
+![result2](./result2.png)
 
 * 本来想要继续调整参数提高准确率，但是电脑太慢了就到此为止吧。
 
-  I wanted to continue to adjust the parameters to improve the accuracy, but my computer is too slow. Let's stop here.
+  I wanted continue to adjust the parameters to improve the accuracy, but my computer is so slow. Let's stop here.
 
 
 
