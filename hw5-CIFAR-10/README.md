@@ -68,7 +68,7 @@ net = IdentityResNet(nblk_stage1=2, nblk_stage2=2,
 ```
 如果想调整block数以提高准确度在上方代码中修改数字即可
 
-* Result of changed the block number of netword and data augmentation as below, accuracy increased 9%
+* Result of changed the block number of netword and data augmentation as below, accuracy increased 10%
 
 
 ```python
@@ -79,8 +79,8 @@ transform = transforms.Compose([transforms.RandomHorizontalFlip(),
                                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
 # define network
-net = IdentityResNet(nblk_stage1=4, nblk_stage2=5,
-                     nblk_stage3=6, nblk_stage4=3)
+net = IdentityResNet(nblk_stage1=5, nblk_stage2=6,
+                     nblk_stage3=7, nblk_stage4=8)
 ```
 
 ![result2](./result2.png)
