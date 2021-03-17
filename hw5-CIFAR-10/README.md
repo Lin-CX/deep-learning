@@ -71,7 +71,7 @@ net = IdentityResNet(nblk_stage1=2, nblk_stage2=2,
 ```
 如果想调整block数以提高准确度在上方代码中修改数字即可
 
-* Result of data augmentation, changed the block number of netword and kernel size, accuracy increased 12%
+* Result of changed the block number of netword and kernel size and data augmentation, accuracy increased 12%
 
 ![result2](./result2.png)
 
