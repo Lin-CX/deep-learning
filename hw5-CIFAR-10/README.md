@@ -60,7 +60,10 @@
 </kbd></div><br>  
 
 ## 🎈 How to modify the number of block
-由于只是作业所以每个stage只有两个block:  
+由于只是作业所以每个stage只有两个block:
+
+There are used only 2 blocks each stage:
+
 ```python
 # define network
 net = IdentityResNet(nblk_stage1=2, nblk_stage2=2,
@@ -68,20 +71,7 @@ net = IdentityResNet(nblk_stage1=2, nblk_stage2=2,
 ```
 如果想调整block数以提高准确度在上方代码中修改数字即可
 
-* Result of changed the block number of netword and data augmentation as below, accuracy increased 10%
-
-
-```python
-# using RandomHorizontalFlip and RandomCrop function to data augmentation
-transform = transforms.Compose([transforms.RandomHorizontalFlip(),
-                                transforms.RandomCrop(28),
-                                transforms.ToTensor(),
-                                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
-
-# define network
-net = IdentityResNet(nblk_stage1=5, nblk_stage2=6,
-                     nblk_stage3=7, nblk_stage4=8)
-```
+* Result of data augmentation, changed the block number of netword and kernel size, accuracy increased 12%
 
 ![result2](./result2.png)
 
